@@ -1,5 +1,5 @@
 {
-  "name": "youtube-studio-mcp",
+  "name": "youtube-channel-mcp",
   "version": "2.1.0",
   "description": "MCP server for YouTube — analytics, video metadata, SEO updates. Read your private channel data and update titles/descriptions/tags directly from Claude. OAuth2, 10 tools, works with Claude Desktop + Claude Code.",
   "type": "module",
