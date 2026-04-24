@@ -188,8 +188,116 @@ async function searchMyVideos(auth, query, maxResults = 10) {
   }));
 }
 
+// ─── YouTube Metadata Safety Guardrails ──────────────────────────────────────
+// HARD BLOCKS — enforced at the server level, cannot be bypassed by any caller.
+// Based on YouTube's official policies:
+//   Title policy:       https://support.google.com/youtube/answer/57421
+//   Spam/misleading:    https://support.google.com/youtube/answer/2801973
+//   Metadata policy:    https://support.google.com/youtube/answer/6162278
+function validateYouTubeMetadata(updates) {
+  const errors = [];
+  const warnings = [];
+
+  // ── Title ────────────────────────────────────────────────────────────────────
+  if (updates.title) {
+    const t = updates.title;
+
+    if (t.trim().length === 0)
+      errors.push("BLOCKED: Title cannot be empty or whitespace only.");
+
+    if (t.length > 100)
+      errors.push(`BLOCKED: Title too long (${t.length} chars). YouTube hard limit is 100 chars.`);
+
+    // ALL CAPS check — >80% uppercase letters = spam signal
+    const letters = t.replace(/[^a-zA-Z]/g, "");
+    if (letters.length > 5 && (t.match(/[A-Z]/g) || []).length / letters.length > 0.8)
+      errors.push("BLOCKED: Title is mostly ALL CAPS. YouTube demotes/flags ALL CAPS titles as spam.");
+
+    // Excessive punctuation
+    const punctCount = (t.match(/[!?]/g) || []).length;
+    if (punctCount > 4)
+      errors.push(`BLOCKED: ${punctCount} exclamation/question marks in title. Max 4 — YouTube flags this as clickbait spam.`);
+
+    // Repetitive characters (e.g. "!!!!!!!" or "......")
+    if (/(.)\1{5,}/.test(t))
+      errors.push('BLOCKED: Repetitive characters detected (e.g. "!!!!!!"). YouTube flags this as spam.');
+
+    // Emoji overload (>3 emojis in title)
+    const emojiMatches = t.match(/\p{Emoji_Presentation}/gu) || [];
+    if (emojiMatches.length > 3)
+      errors.push(`BLOCKED: ${emojiMatches.length} emojis in title. Max 3 — more than that signals spam to YouTube's algorithm.`);
+
+    // Known high-risk misleading clickbait patterns YouTube auto-flags
+    const clickbaitPatterns = [
+      /\b(i'?m (quitting|leaving|deleting|dying|gone forever))\b/i,
+      /\b(100%\s*free\s*(money|robux|vbucks|gift\s*card))\b/i,
+      /\b(hack(ed|ing)\s+youtube)\b/i,
+    ];
+    for (const pattern of clickbaitPatterns) {
+      if (pattern.test(t))
+        errors.push(`BLOCKED: Title matches a known YouTube policy violation pattern: "${t.match(pattern)[0]}".`);
+    }
+  }
+
+  // ── Description ──────────────────────────────────────────────────────────────
+  if (updates.description) {
+    const d = updates.description;
+
+    if (d.length > 5000)
+      errors.push(`BLOCKED: Description too long (${d.length} chars). YouTube hard limit is 5000 chars.`);
+
+    // Keyword stuffing: any word (>3 chars) repeated 8+ times
+    const wordFreq = {};
+    d.toLowerCase().split(/\s+/).forEach((w) => {
+      const clean = w.replace(/[^a-z]/g, "");
+      if (clean.length > 3) wordFreq[clean] = (wordFreq[clean] || 0) + 1;
+    });
+    const stuffed = Object.entries(wordFreq).find(([, c]) => c >= 8);
+    if (stuffed)
+      errors.push(`BLOCKED: Keyword stuffing — "${stuffed[0]}" repeated ${stuffed[1]} times. YouTube penalizes keyword stuffing descriptions.`);
+
+    // Excessive URLs / link spam
+    const urlCount = (d.match(/https?:\/\//g) || []).length;
+    if (urlCount > 15)
+      errors.push(`BLOCKED: ${urlCount} URLs in description. Max 15 — YouTube may flag as link spam.`);
+  }
+
+  // ── Tags ─────────────────────────────────────────────────────────────────────
+  if (updates.tags) {
+    if (!Array.isArray(updates.tags)) {
+      errors.push("BLOCKED: Tags must be an array of strings.");
+    } else {
+      const longTags = updates.tags.filter((t) => t.length > 30);
+      if (longTags.length > 0)
+        errors.push(`BLOCKED: ${longTags.length} tag(s) exceed 30-char YouTube limit: ${longTags.slice(0, 3).map((t) => `"${t}"`).join(", ")}.`);
+
+      const totalChars = updates.tags.reduce((sum, t) => sum + t.length, 0);
+      if (totalChars > 500)
+        errors.push(`BLOCKED: Total tag length (${totalChars} chars) exceeds YouTube's 500-char limit. Remove some tags.`);
+
+      if (updates.tags.length > 30)
+        errors.push(`BLOCKED: Too many tags (${updates.tags.length}). YouTube's effective limit is 30 tags.`);
+    }
+  }
+
+  return { valid: errors.length === 0, errors, warnings };
+}
+
 // Update video SEO: title, description, tags
 async function updateVideoSEO(auth, videoId, updates) {
+  // ── Safety guardrails — HARD BLOCK, not bypassable ──
+  const validation = validateYouTubeMetadata(updates);
+  if (!validation.valid) {
+    return {
+      success: false,
+      blocked: true,
+      reason: "YouTube policy guardrails prevented this update.",
+      errors: validation.errors,
+      warnings: validation.warnings,
+      fix_required: "Correct the issues listed in 'errors' and retry.",
+    };
+  }
+
   const youtube = google.youtube({ version: "v3", auth });
 
   // First get current data
@@ -356,7 +464,7 @@ function getDateDaysAgo(days) {
 
 // ─── MCP Server ───────────────────────────────────────────────────────────────
 const server = new Server(
-  { name: "youtube-analytics", version: "2.0.0" },
+  { name: "youtube-analytics", version: "2.1.0" },
   { capabilities: { tools: {} } }
 );
 
@@ -388,7 +496,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     },
     {
       name: "update_video_seo",
-      description: "Update a video's title, description, and/or tags directly on YouTube. Works for public, unlisted, and private videos. Provide only the fields you want to change.",
+      description: "Update a video's title, description, and/or tags directly on YouTube. Works for public, unlisted, and private videos. Provide only the fields you want to change. IMPORTANT: Built-in YouTube policy guardrails are HARD ENFORCED — updates will be blocked (not warned) if they violate YouTube's rules. TITLE rules: max 100 chars, no ALL CAPS (>80% uppercase), max 4 !?, max 3 emojis, no repetitive characters, no known misleading clickbait patterns. DESCRIPTION rules: max 5000 chars, no keyword stuffing (same word 8+ times), max 15 URLs. TAGS rules: each tag max 30 chars, total tags max 500 chars combined, max 30 tags. These blocks cannot be bypassed.",
       inputSchema: {
         type: "object",
         properties: {
