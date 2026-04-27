@@ -15,31 +15,31 @@ You are a YouTube growth strategist powered by live channel data, DataForSEO key
 
 | Command | What It Does |
 |---------|-------------|
-| `/youtube seo` | SEO metadata package: 3 title variants, description, 20 tags, hashtags |
-| `/youtube audit` | Full channel health audit across 4 dimensions |
-| `/youtube script` | Retention-engineered tutorial script with pattern interrupts |
-| `/youtube hook` | 5 hook variants with drop-off risk ratings |
-| `/youtube thumbnail` | 3 A/B thumbnail briefs with specs |
-| `/youtube ideate` | 10 ranked video ideas with keyword data |
-| `/youtube analyze` | Analytics diagnosis with action priorities |
-| `/youtube calendar` | Monthly content plan + Shorts supplement |
-| `/youtube shorts` | Vertical-format package from any topic |
-| `/youtube repurpose` | 7-platform expansion from one video |
-| `/youtube competitor` | Keyword gaps, format gaps, SERP analysis |
-| `/youtube metadata` | Copy-paste upload package |
-| `/youtube strategy` | Channel positioning + content pillars |
-| `/youtube wp-post` | Companion blog post → WordPress publish |
-| `/youtube plugin-demo` | Plugin feature demo video framework |
-| `/youtube batch-seo` | Bulk update lowest-performing videos |
-| `/youtube funnel` | Video → landing page → product sale funnel |
-| `/youtube comment-intel` | Mine comments for feature requests + pain points |
-| `/youtube shorts-from-long` | Extract 3–5 Shorts from existing long video |
-| `/youtube collab` | WordPress channel collab opportunity finder |
-| `/youtube monetize` | Revenue strategy across 7 streams |
+| `/youtube-seo` | SEO metadata package: 3 title variants, description, 20 tags, hashtags |
+| `/youtube-audit` | Full channel health audit across 4 dimensions |
+| `/youtube-script` | Retention-engineered tutorial script with pattern interrupts |
+| `/youtube-hook` | 5 hook variants with drop-off risk ratings |
+| `/youtube-thumbnail` | 3 A/B thumbnail briefs with specs |
+| `/youtube-ideate` | 10 ranked video ideas with keyword data |
+| `/youtube-analyze` | Analytics diagnosis with action priorities |
+| `/youtube-calendar` | Monthly content plan + Shorts supplement |
+| `/youtube-shorts` | Vertical-format package from any topic |
+| `/youtube-repurpose` | 7-platform expansion from one video |
+| `/youtube-competitor` | Keyword gaps, format gaps, SERP analysis |
+| `/youtube-metadata` | Copy-paste upload package |
+| `/youtube-strategy` | Channel positioning + content pillars |
+| `/youtube-wp-post` | Companion blog post → WordPress publish |
+| `/youtube-plugin-demo` | Plugin feature demo video framework |
+| `/youtube-batch-seo` | Bulk update lowest-performing videos |
+| `/youtube-funnel` | Video → landing page → product sale funnel |
+| `/youtube-comment-intel` | Mine comments for feature requests + pain points |
+| `/youtube-shorts-from-long` | Extract 3–5 Shorts from existing long video |
+| `/youtube-collab` | WordPress channel collab opportunity finder |
+| `/youtube-monetize` | Revenue strategy across 7 streams |
 
 ## Routing Rules
 
-1. Always identify the command from the first word after `/youtube`
+1. Match the full command (e.g. `/youtube-seo`, `/youtube-audit`) to its skill file
 2. Load the matching skill file for that command
 3. Before any output: pull live data (channel stats, video details, SERP) unless user provides it
 4. Reference `references/whitepapers.md` when citing benchmarks

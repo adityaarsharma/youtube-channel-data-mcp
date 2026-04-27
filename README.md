@@ -45,27 +45,27 @@
 
 | Command | What It Does |
 |---------|-------------|
-| `/youtube seo` | 3 title variants, description, 20 tags — with live keyword data |
-| `/youtube audit` | 4-dimension channel health audit with A–F grades |
-| `/youtube script` | Retention-engineered tutorial script, pattern interrupts every 60–90s |
-| `/youtube hook` | 5 hook variants with drop-off risk ratings |
-| `/youtube thumbnail` | 3 A/B thumbnail briefs with full design specs |
-| `/youtube ideate` | 10 ranked video ideas with keyword volume + SERP gap |
-| `/youtube analyze` | Analytics diagnosis — CTR, retention, traffic sources, sub conversion |
-| `/youtube calendar` | Monthly content plan with Shorts supplement + upload cadence |
-| `/youtube shorts` | Vertical-format Short: script, metadata, visual markers |
-| `/youtube repurpose` | 7-platform expansion: Shorts, blog, LinkedIn, X, email, podcast, Community |
-| `/youtube competitor` | Keyword gaps, format gaps, live SERP map |
-| `/youtube metadata` | Copy-paste upload package with pre-publish checklist |
-| `/youtube strategy` | Channel positioning, content pillars, 30/60/90-day milestones |
-| `/youtube wp-post` | Companion blog post → WordPress publish + VideoObject schema |
-| `/youtube plugin-demo` | Script + SEO template for software/plugin demo videos |
-| `/youtube batch-seo` | Bulk SEO update for lowest-performing videos, auto-pushed |
-| `/youtube funnel` | Video → landing page → product purchase funnel map |
-| `/youtube comment-intel` | Mine comments for feature requests, pain points, reply templates |
-| `/youtube shorts-from-long` | Extract 3–5 Shorts from any existing long-form video |
-| `/youtube collab` | Channel collab opportunity finder for your niche |
-| `/youtube monetize` | Revenue strategy across 7 streams |
+| `/youtube-seo` | 3 title variants, description, 20 tags — with live keyword data |
+| `/youtube-audit` | 4-dimension channel health audit with A–F grades |
+| `/youtube-script` | Retention-engineered tutorial script, pattern interrupts every 60–90s |
+| `/youtube-hook` | 5 hook variants with drop-off risk ratings |
+| `/youtube-thumbnail` | 3 A/B thumbnail briefs with full design specs |
+| `/youtube-ideate` | 10 ranked video ideas with keyword volume + SERP gap |
+| `/youtube-analyze` | Analytics diagnosis — CTR, retention, traffic sources, sub conversion |
+| `/youtube-calendar` | Monthly content plan with Shorts supplement + upload cadence |
+| `/youtube-shorts` | Vertical-format Short: script, metadata, visual markers |
+| `/youtube-repurpose` | 7-platform expansion: Shorts, blog, LinkedIn, X, email, podcast, Community |
+| `/youtube-competitor` | Keyword gaps, format gaps, live SERP map |
+| `/youtube-metadata` | Copy-paste upload package with pre-publish checklist |
+| `/youtube-strategy` | Channel positioning, content pillars, 30/60/90-day milestones |
+| `/youtube-wp-post` | Companion blog post → WordPress publish + VideoObject schema |
+| `/youtube-plugin-demo` | Script + SEO template for software/plugin demo videos |
+| `/youtube-batch-seo` | Bulk SEO update for lowest-performing videos, auto-pushed |
+| `/youtube-funnel` | Video → landing page → product purchase funnel map |
+| `/youtube-comment-intel` | Mine comments for feature requests, pain points, reply templates |
+| `/youtube-shorts-from-long` | Extract 3–5 Shorts from any existing long-form video |
+| `/youtube-collab` | Channel collab opportunity finder for your niche |
+| `/youtube-monetize` | Revenue strategy across 7 streams |
 
 ---
 
@@ -176,7 +176,7 @@ Best publish time: [Your timezone]
 Fixed description links: [Your product/docs/community URLs]
 ```
 
-Every command now knows your business. `/youtube seo` writes descriptions with your links. `/youtube funnel` audits your actual product pages. `/youtube batch-seo` updates your real videos.
+Every command now knows your business. `/youtube-seo` writes descriptions with your links. `/youtube-funnel` audits your actual product pages. `/youtube-batch-seo` updates your real videos.
 
 **Pick your channel type** from `skills/youtube-marketing/templates/`:
 
@@ -219,9 +219,9 @@ Full citations: [`references/whitepapers.md`](references/whitepapers.md)
 | Integration | Used For |
 |-------------|---------|
 | **DataForSEO MCP** | Live keyword research + SERP analysis |
-| **WordPress MCP** | Publishing companion posts via `/youtube wp-post` |
+| **WordPress MCP** | Publishing companion posts via `/youtube-wp-post` |
 | **Google Search Console MCP** | Cross-referencing search performance |
-| **GA4 MCP** | Traffic attribution in `/youtube funnel` |
+| **GA4 MCP** | Traffic attribution in `/youtube-funnel` |
 | **Figma MCP** | Thumbnail brief → design handoff |
 | **Slack MCP** | Batch SEO results + weekly analytics digests |
 
