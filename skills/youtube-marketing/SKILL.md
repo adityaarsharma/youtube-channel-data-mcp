@@ -50,55 +50,30 @@ You are a YouTube growth strategist powered by live channel data, DataForSEO key
 ## Context Always Needed
 
 Before running any command, collect if not provided:
+- **Brand** — which channel / product this is for (`--brand [slug]`)
 - **Video topic or URL** (for video-specific commands)
-- **Target audience** (WordPress devs, Elementor users, beginners, agencies)
-- **Product being featured** (The Plus Addons, NexterWP, WDesignKit, UiChemy)
-- **Goal** (views, subscribers, sales, traffic to docs)
+- **Target audience** (from brand config, or specify)
+- **Goal** (views, subscribers, sales, docs traffic)
 
 ## Brand System
 
-This skill uses the same brand slugs as SEO Machine (`~/Claude/SEO-Machine/brands/`).
-Pass `--brand [slug]` with any command, or the brand is auto-detected from context.
+Pass `--brand [slug]` with any command, or brand is auto-detected from context.
+Local brand configs live in `templates/brands/[slug].md` (gitignored — your private data).
 
-### Brand Slugs
+### How It Works
 
-| Slug | Channel | Config File |
-|------|---------|-------------|
-| `posimyth` | @posimyth | `templates/brands/posimyth.md` |
-| `theplusaddons` | @posimyth | `templates/brands/theplusaddons.md` |
-| `nexterwp` | @posimyth | `templates/brands/nexterwp.md` |
-| `uichemy` | @posimyth | `templates/brands/uichemy.md` |
-| `personal` | @adityaarsharma | `templates/brands/personal.md` |
-
-### Auto-Detection Rules
-
-| Signal in request | Brand slug loaded |
-|-------------------|------------------|
-| "elementor", "The Plus Addons", "TPAE", widget names | `theplusaddons` |
-| "gutenberg", "FSE", "block editor", "NexterWP", "Nexter" | `nexterwp` |
-| "figma", "UiChemy", "figma to wordpress" | `uichemy` |
-| @posimyth, "POSIMYTH" (generic, multi-product) | `posimyth` |
-| @adityaarsharma, "Aditya", "Pickle", "Jyotisha", "YouTube MCP", "Claude Code", "MCP server" | `personal` |
-| Not specified → ask: "Which brand? theplusaddons / nexterwp / uichemy / posimyth / personal" | — |
+1. Create `templates/brands/[your-slug].md` from `templates/brands/_template.md`
+2. Fill in your channel handle, products, CTAs, audience, content strategy
+3. Pass `--brand [slug]` to any command — or mention your brand naturally in the request
 
 ### Brand Loading Rule
 Before ANY command output:
-1. Identify brand slug
-2. Load brand config from `templates/brands/[slug].md`
+1. Identify the brand from `--brand` flag or context
+2. Load `templates/brands/[slug].md`
 3. Apply that brand's audience, CTAs, voice, and fixed description block
-4. Never mix brand configs in one output
+4. If brand is unclear → ask: "Which brand? (run `ls templates/brands/` to see yours)"
+5. Never mix brand configs in one output
 
----
-
-## Channel Profiles (Quick Reference)
-
-**@posimyth** (updated 2026-04-28)
-- 13,400 subs | 805 videos | 3,049,823 total views
-- Products: The Plus Addons, NexterWP, UiChemy, WDesignKit
-- Publish: 9–11 PM IST Mon–Thu
-- Goal: Product sales
-
-**@adityaarsharma**
-- Building — Claude Code / AI dev tools niche
-- Products: Pickle, Jyotisha, YouTube MCP, RunCloud MCP (planned)
-- Goal: Product installs + consulting
+### Example Auto-Detection
+If your brand config mentions "Elementor" as a topic, Claude picks it up from context automatically.
+Explicit flag always wins: `/youtube-seo --brand mybrand [topic]`

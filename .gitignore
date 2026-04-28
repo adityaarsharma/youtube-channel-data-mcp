@@ -2,3 +2,8 @@ credentials.json
 tokens.json
 node_modules/
 .DS_Store
+
+# Local brand configs — never commit, stays private
+skills/youtube-marketing/templates/brands/*.md
+!skills/youtube-marketing/templates/brands/_template.md
+skills/youtube-marketing/templates/adityaarsharma.md
