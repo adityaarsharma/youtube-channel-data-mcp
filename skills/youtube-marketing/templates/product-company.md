@@ -57,16 +57,38 @@ Subscribe URL: https://www.youtube.com/c/[handle]/?sub_confirmation=1
 3. Affiliate (hosting, complementary tools — no product conflict)
 4. Ad revenue (passive, not the goal)
 
-## POSIMYTH Example Config
+## POSIMYTH Config (live — updated 2026-04-28)
 
 ```
-Channel: POSIMYTH (@posimyth) — 13,200 subs, 786 videos
+Channel: POSIMYTH (@posimyth) — 13,400 subs, 3,049,823 total views, 805 videos
+Channel ID: UCPChp9hLnrKX9FY1ZzFCyJw
+Country: IN
+
 Products:
-  - The Plus Addons for Elementor → https://theplusaddons.com/pricing/
-  - NexterWP → https://nexterwp.com/
-  - WDesignKit → https://wdesignkit.com/
-  - UiChemy → https://uichemy.com/
-Discount code: YOUTUBE10 (10% off)
+  - The Plus Addons for Elementor (120+ Elementor widgets) → https://theplusaddons.com
+  - NexterWP (Blocks, Theme & Extension) → https://nexterwp.com
+  - UiChemy (Figma to WordPress) → https://uichemy.com
+  - WDesignKit (Templates & Block Layouts) → https://wdesignkit.com
+
+Support: https://store.posimyth.com/helpdesk
+Affiliate program: http://store.posimyth.com/join-affiliate
+Subscribe URL: https://www.youtube.com/channel/UCPChp9hLnrKX9FY1ZzFCyJw?sub_confirmation=1
+
 Best publish time: 9–11 PM IST (Mon–Thu)
-Content ratio: 2 broad Elementor how-to : 1 widget demo
+Content ratio: 2 broad Elementor/Gutenberg how-to : 1 widget/feature demo : 1 Short
+Primary audience: Elementor users, Gutenberg/block editor users, WordPress designers & developers (India + global)
+Revenue goal: Product sales (NOT ad CPM) — every video CTA points to product pricing pages
+```
+
+## Fixed Description Block (use in every POSIMYTH video)
+
+```
+🔥 Our WordPress Plugins:
+▶ The Plus Addons for Elementor (120+ Widgets): https://theplusaddons.com
+▶ NexterWP (Theme + Blocks): https://nexterwp.com
+▶ UiChemy (Figma → WordPress): https://uichemy.com
+▶ WDesignKit (Templates & Layouts): https://wdesignkit.com
+
+💬 Need Help? https://store.posimyth.com/helpdesk
+🤝 Join Affiliate: http://store.posimyth.com/join-affiliate
 ```
