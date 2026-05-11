@@ -51,11 +51,9 @@ One subscriber from your niche is worth more than 10,000 random views. This tool
 
 ## Quick Start
 
-**Recommended setup: Local MCP** — that's what unlocks the live channel data, the SEO write-back, and 80% of the value. The skill-only path works for trying it out, but you'll want the MCP for real workflows.
-
 Full guide: [INSTALL.md](INSTALL.md).
 
-### Recommended — Local MCP (full power)
+**Requirements:** Node.js 18+, Google Cloud project with YouTube Data API v3 + YouTube Analytics API enabled, OAuth 2.0 Desktop credentials.
 
 ```bash
 # 1. Clone + install
@@ -71,7 +69,7 @@ node auth.js
 cp -r skills/youtube-marketing ~/.claude/skills/
 ```
 
-Add to your agent's MCP config (`~/.claude/settings.json`, `~/.cursor/mcp.json`, etc.):
+Add the MCP server to your agent's config (`~/.claude/settings.json`, `~/.cursor/mcp.json`, etc.):
 
 ```json
 {
@@ -84,24 +82,9 @@ Add to your agent's MCP config (`~/.claude/settings.json`, `~/.cursor/mcp.json`,
 }
 ```
 
-Open your agent (Claude Code, Cursor, Codex, Windsurf, Gemini CLI — any MCP+Skills client) and type `/youtube-strategy`. You now have live channel data + SEO write-back.
+Open your agent (Claude Code, Cursor, Codex, Windsurf, Gemini CLI — any MCP+Skills client) and type `/youtube-strategy`. You now have all 21 commands + live channel data + SEO write-back.
 
-**Requirements:** Node.js 18+, Google Cloud project with YouTube Data API v3 + YouTube Analytics API enabled, OAuth 2.0 Desktop credentials.
-
-### Skill-Only — Try Before You Install (limited value)
-
-If you just want to test the prompts without setting up Node + Google Cloud, you can run the skill files alone:
-
-```bash
-git clone https://github.com/adityaarsharma/youtube-marketing-skills.git
-cp -r youtube-marketing-skills/skills/youtube-marketing ~/.claude/skills/
-```
-
-**What works without the MCP:** Strategy, ideation, scripts, hooks, thumbnail briefs — anything that doesn't need your real channel data. You'll paste numbers in by hand.
-
-**What doesn't work:** `/youtube-audit`, `/youtube-analyze`, `/youtube-batch-seo`, `/youtube-comment-intel` — anything that reads live analytics or writes back to YouTube. For these you need the Local MCP above.
-
-Skill-only is fine to demo the prompts. For actual channel work, install the MCP.
+*A no-install hosted option is coming soon for users who don't want to set up Node + Google Cloud.*
 
 Add to Claude Code `settings.json`:
 
@@ -378,11 +361,9 @@ Yes — with Mode 2 (Hosted MCP) or Mode 3 (Local MCP), your agent connects to y
 
 ### Do I need to install Node.js?
 
-For real channel work, **yes** — Node.js 18+ runs the MCP server that connects to your live YouTube data and pushes SEO updates back. That's where 80% of the value lives.
+Yes — Node.js 18+ runs the MCP server that connects to your live YouTube data and pushes SEO updates back. That's how all 21 commands actually work against your real channel.
 
-You *can* run the skill files without Node (paste your analytics into the agent manually), but most commands that matter — `/youtube-audit`, `/youtube-analyze`, `/youtube-batch-seo`, `/youtube-comment-intel` — need the MCP. We'll be honest: skill-only is for trying out prompts, not for running a channel.
-
-A no-install hosted MCP option is in the works for users who don't want to set up Node + Google Cloud. Not live yet.
+A hosted, no-install version is coming soon for users who don't want to set up Node + Google Cloud locally.
 
 ### How is this different from claude-youtube by AgriciDaniel?
 

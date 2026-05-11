@@ -1,48 +1,63 @@
 # Install Guide
 
-Two ways to install today. A third (hosted MCP — no Node required) is coming soon.
+One setup. Local MCP + skills. ~10 minutes (Google Cloud project setup is the only slow part).
 
-| Mode | Node.js? | OAuth? | Live Channel Data | Best For |
-|------|----------|--------|-------------------|----------|
-| **Local MCP** (recommended) | Yes | Yes (local) | Yes | Real channel workflows |
-| **Skill-Only** | No | No | No | Trying prompts, no channel work |
-| ~~Hosted MCP~~ | — | — | — | Coming soon — no install path for users without Node |
-
-**Be honest about skill-only:** Without the MCP server connecting to your live YouTube channel, you can only run the planning/scripting prompts. Anything that reads your analytics or pushes SEO back to YouTube needs the Local MCP. If you have a channel to grow, install the Local MCP.
+A no-install hosted version is coming soon. Until then, this is the path.
 
 ---
 
-## Recommended — Local MCP (Full Power)
+## What You Get
 
-**What you get:**
+- All 21 commands working against your real YouTube channel
 - Reads your private analytics — watch time, retention %, traffic sources, demographics
 - Writes title, description, tags back to YouTube directly from your agent
-- All 21 commands work, including `/youtube-audit`, `/youtube-analyze`, `/youtube-batch-seo`, `/youtube-comment-intel`
 - Runs entirely on your machine — your data never leaves your computer
 
-### Prerequisites
+---
 
-- Node.js 18+ ([install](https://nodejs.org))
-- Google Cloud project with **YouTube Data API v3** + **YouTube Analytics API** enabled
-- OAuth 2.0 credentials, type "Desktop app" — saved as `credentials.json`
+## Prerequisites
 
-### Steps
+- **Node.js 18+** — [install](https://nodejs.org)
+- **Google Cloud project** with both APIs enabled:
+  - YouTube Data API v3
+  - YouTube Analytics API
+- **OAuth 2.0 credentials** (type: Desktop app) — downloaded as `credentials.json`
+
+[Google's guide to enabling the APIs](https://developers.google.com/youtube/v3/getting-started). Pick "Desktop app" when creating the OAuth client.
+
+---
+
+## Steps
+
+### 1. Clone and install
 
 ```bash
-# 1. Clone + install
 git clone https://github.com/adityaarsharma/youtube-marketing-skills.git
-cd youtube-marketing-skills && npm install
+cd youtube-marketing-skills
+npm install
+```
 
-# 2. Drop your credentials.json into this directory
+### 2. Add your Google OAuth credentials
 
-# 3. Authenticate — opens browser, saves tokens locally
+Drop the `credentials.json` you downloaded from Google Cloud Console into the package directory.
+
+### 3. Authenticate
+
+```bash
 node auth.js
+```
 
-# 4. Install the skill files into your agent's skills directory
+Opens a browser, you grant access to your YouTube channel, tokens are saved locally as `tokens.json`.
+
+### 4. Install the skill files
+
+```bash
 cp -r skills/youtube-marketing ~/.claude/skills/
 ```
 
-### Add MCP server to your agent
+For Cursor / Windsurf / other agents, drop the same folder into that agent's skills directory.
+
+### 5. Add the MCP server to your agent
 
 **Claude Code** (`~/.claude/settings.json`):
 
@@ -57,27 +72,14 @@ cp -r skills/youtube-marketing ~/.claude/skills/
 }
 ```
 
-Or via npm:
-
-```json
-{
-  "mcpServers": {
-    "youtube": {
-      "command": "npx",
-      "args": ["youtube-channel-mcp"]
-    }
-  }
-}
-```
-
 **Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
     "youtube": {
-      "command": "npx",
-      "args": ["youtube-channel-mcp"]
+      "command": "node",
+      "args": ["/full/path/to/youtube-marketing-skills/server.js"]
     }
   }
 }
@@ -89,6 +91,19 @@ Or via npm:
 {
   "mcpServers": {
     "youtube": {
+      "command": "node",
+      "args": ["/full/path/to/youtube-marketing-skills/server.js"]
+    }
+  }
+}
+```
+
+Or use the published npm package instead of a local path:
+
+```json
+{
+  "mcpServers": {
+    "youtube": {
       "command": "npx",
       "args": ["youtube-channel-mcp"]
     }
@@ -96,70 +111,15 @@ Or via npm:
 }
 ```
 
-### Verify
+### 6. Restart your agent
 
-```
-/youtube-audit
-```
-
-If it returns a channel health audit with your real numbers, you're set.
-
----
-
-## Skill-Only — Try Before You Install
-
-**Best for:** Testing the prompt quality. Working with channels you don't own. Locked-down machines where you can't install Node.
-
-**Time:** 60 seconds.
-
-```bash
-git clone https://github.com/adityaarsharma/youtube-marketing-skills.git
-cp -r youtube-marketing-skills/skills/youtube-marketing ~/.claude/skills/
-```
-
-Open your agent (Claude Code, Cursor, Codex, Windsurf, Gemini CLI) and type `/youtube-strategy`.
-
-### What Works Without the MCP
-
-✅ `/youtube-strategy` — channel positioning, content pillars, milestones
-✅ `/youtube-ideate` — video ideas (you'll paste your niche/data in)
-✅ `/youtube-script` — retention-engineered scripts
-✅ `/youtube-hook` — hook variants
-✅ `/youtube-thumbnail` — thumbnail briefs
-✅ `/youtube-seo` — title + description + tags (no live keyword data unless DataForSEO MCP added)
-✅ `/youtube-calendar` — content calendar
-✅ `/youtube-metadata` — upload package
-✅ `/youtube-plugin-demo` — software demo templates
-
-### What Doesn't Work Without the MCP
-
-❌ `/youtube-audit` — needs to read your channel
-❌ `/youtube-analyze` — needs live analytics
-❌ `/youtube-batch-seo` — needs to push updates to YouTube
-❌ `/youtube-comment-intel` — needs to read your comments
-❌ Anything that involves "your real channel data"
-
-### Manual Download (no git)
-
-[Download the ZIP](https://github.com/adityaarsharma/youtube-marketing-skills/archive/refs/heads/main.zip) → unzip → move `skills/youtube-marketing/` into `~/.claude/skills/`.
-
----
-
-## Remote Mode — Share With a Team
-
-If you run the MCP server on a shared host so your team uses one channel from multiple machines:
-
-```bash
-MODE=remote PORT=3001 node server.js
-```
-
-Then point each client's MCP config at the HTTP/SSE endpoint instead of `command + args`.
+Quit and reopen Claude Code / Cursor / Claude Desktop so it picks up the new MCP server.
 
 ---
 
 ## Configure Your Channel
 
-Open `skills/youtube-marketing/SKILL.md` (in `~/.claude/skills/youtube-marketing/`) and set once:
+Open `~/.claude/skills/youtube-marketing/SKILL.md` (or wherever you copied the skill folder) and set once:
 
 ```markdown
 Channel: [Your channel name and handle]
@@ -170,7 +130,31 @@ Fixed links: [URLs to embed in every description]
 Discount code: [Your coupon, if any]
 ```
 
-Every command now respects your config. For multi-brand setups, drop additional brand files in `skills/youtube-marketing/templates/brands/` (gitignored — your private brand details stay local).
+Every command now respects your config. For multi-brand setups, drop additional brand files in `templates/brands/` (gitignored — stays local).
+
+---
+
+## Verify
+
+In your agent:
+
+```
+/youtube-audit
+```
+
+If it returns a channel health audit with your real numbers, you're set.
+
+---
+
+## Remote Mode — Share With a Team
+
+To run the MCP on a shared host so multiple machines use one channel:
+
+```bash
+MODE=remote PORT=3001 node server.js
+```
+
+Point each client's MCP config at the HTTP/SSE endpoint instead of `command + args`.
 
 ---
 
@@ -178,23 +162,22 @@ Every command now respects your config. For multi-brand setups, drop additional 
 
 | Problem | Fix |
 |---------|-----|
-| `node: command not found` | Install Node.js 18+ from nodejs.org |
+| `node: command not found` | Install Node.js 18+ from [nodejs.org](https://nodejs.org) |
 | `credentials.json not found` | Download OAuth credentials from Google Cloud Console → save in the package directory |
-| Claude/Cursor says "skill not found" | Skills folder isn't in your agent's skills directory — re-check the `cp -r` path |
-| Commands work but skip live data | The MCP server isn't loaded — check your `mcpServers` config |
+| Agent says "skill not found" | Skill folder isn't in your agent's skills directory — recheck the `cp -r` path |
+| Commands return generic answers, not channel data | The MCP server isn't loaded — check your `mcpServers` config + restart the agent |
+| `Error: invalid_grant` on auth | Tokens expired — re-run `node auth.js` |
 | API quota exceeded | YouTube Data API gives 10K units/day free; `/youtube-batch-seo` is expensive — run on smaller batches |
-| Tokens expired | Re-run `node auth.js` to refresh |
 
 ---
 
 ## What Gets Stored Where
 
-| Data | Local MCP | Skill-Only |
-|------|-----------|-----------|
-| Skill markdown files | Your machine | Your machine |
-| YouTube channel data | Streamed in by the server, not persisted | Never accessed |
-| OAuth tokens | `tokens.json` on your machine | None |
-| Channel config (SKILL.md) | Your machine | Your machine |
-| External API logs | None | None |
+| Data | Location |
+|------|----------|
+| Skill markdown files | Your machine (`~/.claude/skills/youtube-marketing/`) |
+| YouTube channel data | Streamed in by the local MCP server, never persisted |
+| OAuth tokens | `tokens.json` on your machine |
+| Channel config | `SKILL.md` on your machine |
 
-Everything runs locally. Nothing is sent to any third-party service unless you explicitly add an integration (DataForSEO, ElevenLabs, etc. — those run with your own API keys).
+Everything runs locally. Nothing is sent to any third-party service unless you explicitly add an integration (DataForSEO, ElevenLabs, etc. — those use your own API keys).
