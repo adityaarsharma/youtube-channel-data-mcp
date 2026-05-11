@@ -264,14 +264,28 @@ Pick the template that fits your channel type — configure it once in `SKILL.md
 
 ## Integrations
 
-| Integration | What It Enables |
-|-------------|----------------|
-| **DataForSEO MCP** | Live keyword volume + SERP data in `/youtube-ideate` and `/youtube-seo` |
-| **WordPress MCP** | Companion post publishing via `/youtube-wp-post` |
-| **Google Search Console MCP** | Search performance cross-reference in `/youtube-analyze` |
-| **GA4 MCP** | Traffic attribution in `/youtube-funnel` |
-| **Figma MCP** | Thumbnail brief → design file handoff |
-| **Slack MCP** | Batch SEO results + weekly analytics digests |
+### Live Data Layer
+
+| Integration | What It Enables | Used By |
+|-------------|----------------|---------|
+| **DataForSEO MCP** | Live keyword volume + YouTube SERP data + search trends | `/youtube-ideate`, `/youtube-seo`, `/youtube-competitor` |
+| **WordPress MCP** | Companion post publishing with VideoObject schema | `/youtube-wp-post` |
+
+### Video Production Stack
+
+Chain these together to produce finished videos from inside Claude — no manual editing, no leaving your terminal.
+
+| Integration | What It Enables | Used By |
+|-------------|----------------|---------|
+| **Remotion MCP** | Programmatic video creation — animated intros, code reveals, lower-thirds, outros (React → MP4) | `/youtube-tutorial-build`, `/youtube-channel-trailer` *(roadmap)* |
+| **FFmpeg MCP** | Video assembly, vertical 9:16 reframe, caption burn-in, clip extraction, format conversion | `/youtube-shorts-build`, `/youtube-clip-from-long` *(roadmap)* |
+| **ElevenLabs MCP** | AI voiceover for Shorts and tutorials — 10k credits/month free, voice cloning supported | `/youtube-shorts-build`, `/youtube-tutorial-build` *(roadmap)* |
+| **Whisper MCP** | Auto-captions — word-level SRT/VTT for burned-in animated captions. 85% of Shorts watched on mute — captions are non-negotiable | `/youtube-shorts-build`, `/youtube-clip-from-long` *(roadmap)* |
+| **Pexels MCP** | Free vertical B-roll stock footage matched to your script keywords | `/youtube-shorts-build` *(roadmap)* |
+| **Freesound MCP** | Viral SFX (whoosh, bell, ding, transitions) + royalty-free music | `/youtube-shorts-build` *(roadmap)* |
+| **Nano Banana 2 MCP** | Thumbnail image generation from briefs (Gemini Flash Image, ~$0.03/image) | `/youtube-thumbnail-image` *(roadmap)* |
+
+Roadmap details: [`marketing/integration-roadmap.md`](marketing/integration-roadmap.md) — 5 new orchestrator skills that chain these MCPs into one-command video production workflows.
 
 ---
 
