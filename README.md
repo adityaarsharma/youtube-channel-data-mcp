@@ -51,51 +51,57 @@ One subscriber from your niche is worth more than 10,000 random views. This tool
 
 ## Quick Start
 
-**Three install modes — pick whichever fits.** Full guide: [INSTALL.md](INSTALL.md).
+**Recommended setup: Local MCP** — that's what unlocks the live channel data, the SEO write-back, and 80% of the value. The skill-only path works for trying it out, but you'll want the MCP for real workflows.
 
-| Mode | Node.js? | OAuth? | Live Channel Data | Best For |
-|------|----------|--------|-------------------|----------|
-| **1. Skill-Only** | No | No | No | Trying it out, offline use |
-| **2. Hosted MCP** | No | Yes (1-click web) | Yes | Most people — no install hassle |
-| **3. Local MCP** | Yes | Yes (local) | Yes | Privacy maximalists, advanced users |
+Full guide: [INSTALL.md](INSTALL.md).
 
-### Mode 1 — Skill-Only (60 seconds, no install)
+### Recommended — Local MCP (full power)
+
+```bash
+# 1. Clone + install
+git clone https://github.com/adityaarsharma/youtube-marketing-skills.git
+cd youtube-marketing-skills && npm install
+
+# 2. Drop your Google OAuth credentials.json into the directory
+
+# 3. Authenticate — opens browser once, saves tokens locally
+node auth.js
+
+# 4. Install the skill files into your agent
+cp -r skills/youtube-marketing ~/.claude/skills/
+```
+
+Add to your agent's MCP config (`~/.claude/settings.json`, `~/.cursor/mcp.json`, etc.):
+
+```json
+{
+  "mcpServers": {
+    "youtube": {
+      "command": "node",
+      "args": ["/full/path/to/youtube-marketing-skills/server.js"]
+    }
+  }
+}
+```
+
+Open your agent (Claude Code, Cursor, Codex, Windsurf, Gemini CLI — any MCP+Skills client) and type `/youtube-strategy`. You now have live channel data + SEO write-back.
+
+**Requirements:** Node.js 18+, Google Cloud project with YouTube Data API v3 + YouTube Analytics API enabled, OAuth 2.0 Desktop credentials.
+
+### Skill-Only — Try Before You Install (limited value)
+
+If you just want to test the prompts without setting up Node + Google Cloud, you can run the skill files alone:
 
 ```bash
 git clone https://github.com/adityaarsharma/youtube-marketing-skills.git
 cp -r youtube-marketing-skills/skills/youtube-marketing ~/.claude/skills/
 ```
 
-Open your agent (Claude Code, Cursor, Codex, Windsurf, Gemini CLI — any MCP+Skills client) and type `/youtube-strategy`. Done.
+**What works without the MCP:** Strategy, ideation, scripts, hooks, thumbnail briefs — anything that doesn't need your real channel data. You'll paste numbers in by hand.
 
-### Mode 2 — Hosted MCP (recommended — no Node.js, full live data)
+**What doesn't work:** `/youtube-audit`, `/youtube-analyze`, `/youtube-batch-seo`, `/youtube-comment-intel` — anything that reads live analytics or writes back to YouTube. For these you need the Local MCP above.
 
-1. Connect your YouTube at **[youtube-skills.adityaarsharma.com/connect](https://youtube-skills.adityaarsharma.com/connect)** (opens Google OAuth, returns a refresh token)
-2. Add the hosted MCP URL + your token to `~/.claude/settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "youtube": {
-      "url": "https://youtube-mcp.adityaarsharma.com/sse",
-      "transport": "sse",
-      "env": { "YOUTUBE_REFRESH_TOKEN": "your-token-here" }
-    }
-  },
-  "skills": ["~/.claude/skills/youtube-marketing/SKILL.md"]
-}
-```
-
-**Privacy:** The hosted MCP is a stateless relay. **We don't store your data, analytics, or tokens.** Each request passes through with your token, hits YouTube's API, returns the response. Nothing is logged or persisted server-side. The code running is exactly what's in [`server.js`](server.js) — open source, auditable.
-
-### Mode 3 — Local MCP (full control)
-
-```bash
-npx youtube-channel-mcp
-node auth.js   # OAuth runs locally, tokens stay on your machine
-```
-
-Requires Node.js 18+ and a Google Cloud OAuth project. Nothing leaves your machine.
+Skill-only is fine to demo the prompts. For actual channel work, install the MCP.
 
 Add to Claude Code `settings.json`:
 
@@ -372,16 +378,11 @@ Yes — with Mode 2 (Hosted MCP) or Mode 3 (Local MCP), your agent connects to y
 
 ### Do I need to install Node.js?
 
-No — there are two no-Node paths:
+For real channel work, **yes** — Node.js 18+ runs the MCP server that connects to your live YouTube data and pushes SEO updates back. That's where 80% of the value lives.
 
-- **Mode 1 (Skill-Only)** — pure markdown skills, no server, no install. Trade-off: no live channel data, you paste analytics in manually.
-- **Mode 2 (Hosted MCP)** — uses our free hosted MCP endpoint at `youtube-mcp.adityaarsharma.com`. You get full live channel data + SEO write-back without installing Node. The hosted endpoint is a stateless relay — we don't store your tokens or data.
+You *can* run the skill files without Node (paste your analytics into the agent manually), but most commands that matter — `/youtube-audit`, `/youtube-analyze`, `/youtube-batch-seo`, `/youtube-comment-intel` — need the MCP. We'll be honest: skill-only is for trying out prompts, not for running a channel.
 
-Only **Mode 3 (Local MCP)** requires Node.js. That's for users who want everything running on their own machine with zero third parties.
-
-### Does the hosted MCP store my YouTube data or auth tokens?
-
-No. The hosted MCP at `youtube-mcp.adityaarsharma.com` is a **stateless relay**. Each request you send includes your OAuth token, the server uses it once to call YouTube's API, returns the response, and forgets it. No database, no logs of your tokens, no persistence of your channel data. The exact code running is in [`server.js`](server.js) — open source and auditable. If you don't trust the hosted version, run the same code yourself with Mode 3.
+A no-install hosted MCP option is in the works for users who don't want to set up Node + Google Cloud. Not live yet.
 
 ### How is this different from claude-youtube by AgriciDaniel?
 
