@@ -48,7 +48,7 @@ Check these elements in order:
 ### Layer 3 — Conversion
 | Element | Present? | Fix If Missing |
 |---------|----------|----------------|
-| YOUTUBE10 discount code works | | Test and fix |
+| [YOUR_DISCOUNT_CODE] discount code works | | Test and fix |
 | Free version available to reduce friction | | Ensure free tier is clear |
 | 60-day money-back guarantee prominent | | Add trust signal |
 
@@ -72,7 +72,7 @@ Trust signals (reviews, guarantee): ✅/❌
 
 ### CONVERSION ELEMENTS
 Free version: ✅/❌
-Discount code: ✅/❌ (YOUTUBE10)
+Discount code: ✅/❌ ([YOUR_DISCOUNT_CODE])
 Money-back guarantee: ✅/❌
 
 ### FIXES NEEDED (priority order)

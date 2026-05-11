@@ -48,4 +48,4 @@ DataForSEO charges per API call. To minimize costs:
 
 ## Sources
 - DataForSEO API documentation
-- POSIMYTH channel keyword research, March 2026
+- your channel keyword research, March 2026

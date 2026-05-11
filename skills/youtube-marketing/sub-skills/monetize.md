@@ -18,7 +18,7 @@ description: >
 ## The 7 Revenue Streams
 
 ### Stream 1 — Direct Plugin Sales (Primary)
-**How**: Every video links to the product pricing page. YOUTUBE10 discount code reduces friction.
+**How**: Every video links to the product pricing page. [YOUR_DISCOUNT_CODE] discount code reduces friction.
 **Best for**: Widget demos, plugin comparison videos, "without Pro" tutorials
 **CTA placement**: First 5 lines of description + mentioned at 25% mark in video
 **Target conversion**: 0.5–2% of views → free download → 10–20% of free → Pro upgrade
@@ -32,27 +32,27 @@ description: >
 - Page builders adjacent tools (Rank Math, WP Rocket) — $15–40/referral
 - Design tools (Envato Elements, Creative Fabrica) — $10–25/referral
 **CTA**: Add affiliate link in description with clear disclosure ("This is an affiliate link")
-**Do not**: Promote anything that competes with POSIMYTH products
+**Do not**: Promote anything that competes with your products
 
 ### Stream 3 — YouTube Ad Revenue (Ad Sense)
 **When it matters**: Only after 1,000 subs + 4,000 watch hours (YPP threshold)
 **Current channel status**: Already monetized
 **CPM range for WordPress tutorial niche**: $8–15 avg, $15–25 in Q4
 **Optimization**: Longer videos (12–20 min) = more mid-roll ad slots = higher RPM
-**Important**: Never prioritize ad revenue over plugin sales. At POSIMYTH's scale, one plugin sale > 10,000 ad views.
+**Important**: Never prioritize ad revenue over plugin sales. At [YOUR_COMPANY]'s scale, one plugin sale > 10,000 ad views.
 
 ### Stream 4 — Email List Building
 **How**: Capture emails via a lead magnet promoted in videos
-**Lead magnet ideas for POSIMYTH**:
-- "100 Elementor Design Templates" (free WDesignKit pack)
+**Lead magnet ideas for [YOUR_COMPANY]**:
+- "100 Elementor Design Templates" (free [Your Product 3] pack)
 - "Elementor Speed Checklist" (practical + drives WP Rocket or Nexter affiliate)
-- "The Plus Addons Starter Kit" (free widgets list with use cases)
+- "[Your Product] Starter Kit" (free widgets list with use cases)
 **CTA in video**: Mention at 25% mark + end screen card → link to landing page
-**Email sequence**: 5-email welcome series → Week 2 product tutorial highlight → Week 4 YOUTUBE10 discount reminder
+**Email sequence**: 5-email welcome series → Week 2 product tutorial highlight → Week 4 [YOUR_DISCOUNT_CODE] discount reminder
 
 ### Stream 5 — Sponsorships and Brand Deals
 **Threshold**: Channels over 10K subs can negotiate directly with brands
-**Current POSIMYTH position**: 13K subs — viable for mid-tier deals
+**Current [YOUR_COMPANY] position**: 13K subs — viable for mid-tier deals
 **Target sponsors**:
 - Web hosting companies (highest CPMs in WP niche)
 - Design tool brands (Figma, Adobe, Canva)
@@ -63,15 +63,15 @@ description: >
 
 ### Stream 6 — Course or Membership (Long-term)
 **Only pursue after**: 25K+ subs with strong engagement
-**POSIMYTH angle**: "Complete Elementor Agency Course" — using all 4 POSIMYTH tools to build real client sites
-**Platform options**: Teachable, Kajabi, or a dedicated section of a POSIMYTH product site
+**Your angle**: "Complete Elementor Agency Course" — using all 4 [YOUR_COMPANY] tools to build real client sites
+**Platform options**: Teachable, Kajabi, or a dedicated section of a your product site
 **Price point**: $49–99 for a full course (matches plugin Pro price = familiar price anchor)
 **Minimum viable**: 5 modules × 10 videos each — already exists in existing video archive if repurposed
 
 ### Stream 7 — Community Membership (YouTube Memberships or Patreon)
 **What to offer**: Early video access, monthly Q&A, member-only Discord/community
 **Only works if**: Highly engaged audience (>1% comment rate, strong returning viewer %)
-**POSIMYTH current position**: Sub/view ratio too low currently — fix conversion first, then revisit
+**[YOUR_COMPANY] current position**: Sub/view ratio too low currently — fix conversion first, then revisit
 **Price point**: $5–15/month
 
 ## Revenue Priority Matrix
@@ -90,8 +90,8 @@ description: >
 
 | Video Type | Primary CTA | Where in Video | Secondary CTA |
 |------------|------------|----------------|---------------|
-| Widget demo | Widget pricing page | 25% mark + end | WDesignKit free download |
-| Broad Elementor tutorial | Plus Addons pricing | End screen | Discount code YOUTUBE10 |
+| Widget demo | Widget pricing page | 25% mark + end | [Your Product 3] free download |
+| Broad Elementor tutorial | Plus Addons pricing | End screen | Discount code [YOUR_DISCOUNT_CODE] |
 | "Without Pro" video | Free plugin download | 25% mark | Upgrade to Pro CTA |
 | Comparison video | Demo page | Description top 5 lines | Free trial |
 | Shorts | Subscribe + "Full tutorial ↑" | Last 5s | None (too short) |
@@ -99,9 +99,9 @@ description: >
 ## Q4 Revenue Playbook (Oct–Dec)
 
 Q4 has 40–60% higher CPM AND highest plugin purchase intent (agency budget season):
-1. Push YOUTUBE10 code more aggressively in Q4 videos
+1. Push [YOUR_DISCOUNT_CODE] code more aggressively in Q4 videos
 2. Create "Best Elementor Plugins for 2026" style list videos (affiliate + product)
-3. Plan a Black Friday video: POSIMYTH annual sale announcement
+3. Plan a Black Friday video: [YOUR_COMPANY] annual sale announcement
 4. Increase upload cadence to 3x/week in Nov
 5. Email list CTA every single video in Q4
 
@@ -131,7 +131,7 @@ Date: [today]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## CTA AUDIT (existing videos)
 
-[Are YOUTUBE10 and product links consistently placed in top 5 lines?]
+[Are [YOUR_DISCOUNT_CODE] and product links consistently placed in top 5 lines?]
 [Is the 25% mark CTA present in recent videos?]
 [Fixes needed:]
 

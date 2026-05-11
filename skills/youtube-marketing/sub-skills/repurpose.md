@@ -64,7 +64,7 @@ YouTube Video (long-form)
   - Visual: GIF or screenshot of result
   - 3-bullet summary of what they'll learn
   - CTA button: "Watch the Tutorial →"
-  - Footer: Discount code YOUTUBE10 reminder
+  - Footer: Discount code [YOUR_DISCOUNT_CODE] reminder
 - **Length**: Under 200 words — link to video, don't explain everything in email
 
 ### 6. Podcast Notes (if audio format is used)

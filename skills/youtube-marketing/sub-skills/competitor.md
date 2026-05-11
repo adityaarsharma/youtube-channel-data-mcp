@@ -2,7 +2,7 @@
 name: youtube-competitor
 description: >
   Live competitor analysis using DataForSEO SERP data. Identifies keyword gaps,
-  format gaps, audience sentiment gaps, and POSIMYTH's best differentiation angles.
+  format gaps, audience sentiment gaps, and [YOUR_COMPANY]'s best differentiation angles.
   Runs 4 parallel analyses.
 ---
 
@@ -13,7 +13,7 @@ description: >
 - **Jeffrey @ Lytbox**: Wins with "no code / no popup / no pro" framing. ~240K combined views
 - **Imran Siddiq - Web Squadron**: Evergreen content, multiple aged videos still ranking
 - **WPDev**: Most active 2025–2026, 6 videos in top 25 for navigation keywords alone
-- **POSIMYTH gap**: No competitor covers widget/no-code solutions where top content requires GSAP/CSS
+- **[YOUR_COMPANY] gap**: No competitor covers widget/no-code solutions where top content requires GSAP/CSS
 
 ## 4-Part Competitor Analysis
 
@@ -26,13 +26,13 @@ For the target keyword, run `dfs-mcp:serp_youtube_organic_live_advanced` and map
 
 Key questions:
 - Which videos are 2+ years old? (Freshness gap)
-- Which require CSS/GSAP/code? (No-code gap — POSIMYTH's main advantage)
+- Which require CSS/GSAP/code? (No-code gap — [YOUR_COMPANY]'s main advantage)
 - Which require Elementor Pro? (Free tier gap)
 - Which don't cover the full use case (agency, portfolio, SaaS)?
 
 ### ANALYSIS 2 — Keyword Gap
 Run `dfs-mcp:dataforseo_labs_google_keyword_ideas` on competitor channel's top videos.
-Find keywords they rank for that POSIMYTH has no video covering.
+Find keywords they rank for that [YOUR_COMPANY] has no video covering.
 
 Priority gaps:
 - Keywords where top video is >2 years old
@@ -42,7 +42,7 @@ Priority gaps:
 ### ANALYSIS 3 — Format Gap
 Compare video formats across top competitors:
 
-| Format | MDW | Lytbox | Web Squadron | WPDev | POSIMYTH |
+| Format | MDW | Lytbox | Web Squadron | WPDev | [YOUR_COMPANY] |
 |--------|-----|--------|-------------|-------|---------|
 | Full build tutorial | | | | | |
 | Quick tip (<5 min) | | | | | |
@@ -72,7 +72,7 @@ Date: [today]
 [Top 10 table with: rank, channel, views, age, code required, pro required]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-## KEYWORD GAPS (no POSIMYTH video exists)
+## KEYWORD GAPS (no [YOUR_COMPANY] video exists)
 
 | Keyword | Vol | Top Competitor | Views | Age | Gap Type |
 |---------|-----|----------------|-------|-----|---------|
@@ -80,11 +80,11 @@ Date: [today]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## FORMAT GAPS
-[What formats top competitors use that POSIMYTH doesn't]
+[What formats top competitors use that [YOUR_COMPANY] doesn't]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-## POSIMYTH WINNING ANGLES
-[2-3 specific angles where POSIMYTH has clear advantage over every top competitor]
+## [YOUR_COMPANY] WINNING ANGLES
+[2-3 specific angles where [YOUR_COMPANY] has clear advantage over every top competitor]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## TOP 3 VIDEOS TO MAKE (based on this analysis)

@@ -12,7 +12,9 @@
 
 ---
 
-**If this grows your channel — [⭐ star this repo](https://github.com/adityaarsharma/youtube-marketing-skills).** It's the only signal that tells us what to build next.
+### ⭐ Star Goal: 500 in 30 days → unlocks v1.1 (CTR rescue + plateau buster + outlier detector)
+
+**[⭐ Star this repo](https://github.com/adityaarsharma/youtube-marketing-skills)** if you've ever spent a Sunday planning a video that got 43 views. Every star tells me what to ship next — and v1.1 unlocks at 500.
 
 ---
 
@@ -49,14 +51,24 @@ One subscriber from your niche is worth more than 10,000 random views. This tool
 
 ## Quick Start
 
-**Prerequisites:** Node.js 18+, Google Cloud project with YouTube Data API v3 + YouTube Analytics API enabled, OAuth 2.0 Desktop credentials.
+**Two install paths — full guide in [INSTALL.md](INSTALL.md):**
+
+### Path 1 — Skill-Only (60 seconds, no Node.js)
 
 ```bash
-# 1. Install
-npx youtube-channel-mcp
+git clone https://github.com/adityaarsharma/youtube-marketing-skills.git
+cp -r youtube-marketing-skills/skills/youtube-marketing ~/.claude/skills/
+```
 
-# 2. Authenticate once — opens browser, saves tokens locally on your machine
-node auth.js
+Done. Open Claude Code, type `/youtube-strategy`. Works in Claude Code, Cursor, Codex, Gemini CLI — no server, no OAuth, no Node.
+
+### Path 2 — Live Channel Mode (full power)
+
+Adds private analytics reading + SEO write-back to YouTube. Requires Node.js 18+ and a Google Cloud OAuth project.
+
+```bash
+npx youtube-channel-mcp
+node auth.js   # opens browser, saves tokens locally
 ```
 
 Add to Claude Code `settings.json`:
@@ -304,20 +316,47 @@ references/
 
 ## Other Install Options
 
-```bash
-# One-line shell script
-curl -fsSL https://raw.githubusercontent.com/adityaarsharma/youtube-marketing-skills/main/install.sh | bash
+See **[INSTALL.md](INSTALL.md)** for the full guide — skill-only (no Node.js), full live mode, remote mode for teams, and Cursor / Claude Desktop / Codex / Gemini CLI configs.
 
-# Clone and run
-git clone https://github.com/adityaarsharma/youtube-marketing-skills
-cd youtube-marketing-skills && npm install && node auth.js
-```
+---
 
-**Remote mode** — share with a team:
+## FAQ
 
-```bash
-MODE=remote PORT=3001 node server.js
-```
+### Is this a free VidIQ alternative?
+
+Yes. 100% free, open source, MIT licensed. No subscription, no paywalled features, no usage limits. Everything VidIQ charges $49–$99/month for — keyword research, SEO scoring, bulk SEO updates, channel audits — runs locally on your machine with this toolkit.
+
+### Can Claude AI manage my YouTube channel?
+
+Yes — with Path 2 (live mode), Claude connects to your channel via OAuth and can read your private analytics (watch time, retention, traffic sources) and write back SEO updates (title, description, tags) directly. You stay in control: Claude proposes changes, you approve before they push.
+
+### Do I need to install Node.js?
+
+No — **Path 1 (skill-only mode)** works without Node.js. The 21 commands are pure markdown skill files that Claude reads. You only need Node.js if you want the live channel tools (Path 2) that connect via OAuth.
+
+### How is this different from claude-youtube by AgriciDaniel?
+
+claude-youtube is skill-only — you paste analytics in manually. This repo offers both: pure skill mode + a live MCP server that reads private analytics and writes SEO directly to YouTube. You also get a WordPress companion-post pipeline, batch SEO updates, and 21 commands vs 14.
+
+### How is this different from VidIQ or TubeBuddy?
+
+VidIQ and TubeBuddy show you scores. This gives you a workflow. They suggest keywords; this pushes the optimized title directly to YouTube. They give you a CTR number; this diagnoses why CTR is low and rewrites your thumbnail brief. They cost $49–$99/month; this is free and runs on your machine.
+
+### How do I grow a YouTube channel without paid ads?
+
+Use the **Organic Growth Playbook** above: find evergreen keyword gaps (`/youtube-ideate`), publish optimized tutorials with companion WordPress posts (`/youtube-wp-post`), then run `/youtube-batch-seo` quarterly to refresh older videos. This stacks YouTube Search + Google Search + Suggested traffic into one compounding system. No paid ads required.
+
+### What is a YouTube MCP server?
+
+An MCP (Model Context Protocol) server is a local program that gives AI agents like Claude direct access to a service. This repo's MCP server exposes 10 YouTube tools — read analytics, search your channel, update video SEO — so Claude can act on your real channel data. It runs entirely on your machine via OAuth2; nothing is sent to third parties.
+
+### Does this work with channels that have a product to sell?
+
+Yes — it was specifically built for channels where one subscriber is worth more than 10,000 ad views. Configure your products and fixed links once in `SKILL.md`, then every command writes descriptions, CTAs, and funnels around your real product pages. There are channel templates for plugin/SaaS, agency, consultancy, personal brand, and tutorial channels.
+
+### Will this work for new channels under 1,000 subscribers?
+
+Yes — the strategy and ideation commands work without any channel data (`/youtube-strategy`, `/youtube-ideate`, `/youtube-script`, `/youtube-hook`, `/youtube-thumbnail`). Live analytics commands obviously need an existing channel. The Organic Growth Playbook is designed to take a channel from zero to its first thousand subscribers using SEO-driven discovery.
 
 ---
 

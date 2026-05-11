@@ -41,7 +41,7 @@ Best for: features that seem complex but are actually simple
 ```
 "This looks like it needs a developer. It doesn't.
 I'll show you how to build this in Elementor in under 15 minutes — no code,
-no GSAP, just The Plus Addons."
+no GSAP, just [Your Product]."
 ```
 Risk rating: LOW-MEDIUM — strong if the result actually delivers on the promise
 

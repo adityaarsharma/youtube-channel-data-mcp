@@ -45,7 +45,7 @@ Comments that mention other plugins or tools:
 - "I was using [tool] before..."
 - "This is better/worse than [tool]"
 
-These reveal which competitors POSIMYTH viewers are evaluating.
+These reveal which competitors your viewers are evaluating.
 
 ### 5. Sentiment Markers
 - **Confusion markers**: "I'm lost at...", "What is...", "Why does..."
@@ -103,12 +103,12 @@ If it's still not working, drop a message at [support URL] and we'll help you di
 ```
 Thank you! That really means a lot. If you ever run into anything or want to explore more, 
 the docs are at [docs URL] and our community is at [community URL]. 
-Use YOUTUBE10 for 10% off anything you haven't tried yet.
+Use [YOUR_DISCOUNT_CODE] for 10% off anything you haven't tried yet.
 ```
 
 ### Template 6 — Competitor Mention
 ```
-Both work great! The main difference with [POSIMYTH product] is [1-line differentiation].
+Both work great! The main difference with [your product] is [1-line differentiation].
 If you want to compare directly, [comparison URL or demo URL].
 ```
 
@@ -144,7 +144,7 @@ Date: [today]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## COMPETITOR MENTIONS
 
-| Competitor | Context | POSIMYTH Counter-angle |
+| Competitor | Context | Your Counter-angle |
 |------------|---------|----------------------|
 | [tool] | [how mentioned] | [differentiation] |
 

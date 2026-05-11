@@ -113,7 +113,7 @@ For topics where a 60s answer is complete:
 - "Why your Elementor site is slow — fix in 30s"
 
 ### Type 3 — Trend-capture Shorts
-When a broader YouTube trend fits POSIMYTH's niche:
+When a broader YouTube trend fits [YOUR_COMPANY]'s niche:
 - "Bento grid layout in Elementor — 60 seconds"
 - "Dark mode portfolio site — Elementor, no CSS"
 

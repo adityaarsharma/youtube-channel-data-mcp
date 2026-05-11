@@ -25,7 +25,7 @@ Use `dfs-mcp:serp_youtube_organic_live_advanced` on primary keyword.
 Note top 5 competitor view counts, ages, title patterns, and content gaps.
 
 ### STEP 2 — SERP Gap Analysis
-Identify what top-ranking videos DON'T cover. POSIMYTH wins by:
+Identify what top-ranking videos DON'T cover. Product channels win by:
 - Offering widget/no-code solution where competitors use CSS/GSAP
 - Adding "2026" freshness when top videos are 2+ years old
 - Targeting specific audience (agency, portfolio) when competitors are generic
@@ -58,8 +58,8 @@ Mention use cases: agency, portfolio, SaaS, business.]
 📺 Live Demo: [demo URL]
 📖 Docs: [docs URL]
 
-Download FREE: https://theplusaddons.com/download-free
-Get Pro: https://theplusaddons.com/pricing/
+Download FREE: [YOUR_FREE_DOWNLOAD_URL]
+Get Pro: [YOUR_PRODUCT_URL]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔥 WHAT YOU'LL LEARN
@@ -82,17 +82,17 @@ Get Pro: https://theplusaddons.com/pricing/
 🔗 IMPORTANT LINKS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ▶ [Widget page if applicable]
-▶ Get 120+ Powerful Elementor Widgets: https://theplusaddons.com/pricing/
-▶ Nexter Theme Builder: https://nexterwp.com/
-▶ Facebook Community: https://www.facebook.com/groups/theplus4elementor/
-▶ Docs & Help: https://theplusaddons.com/docs/
-▶ Premium Support: https://store.posimyth.com/helpdesk/
-▶ Feature Roadmap: https://roadmap.theplusaddons.com/
+▶ Get 120+ Powerful Elementor Widgets: [YOUR_PRODUCT_URL]
+▶ [Your Product 2]: [YOUR_PRODUCT_2_URL]
+▶ Facebook Community: [YOUR_COMMUNITY_URL]
+▶ Docs & Help: [YOUR_DOCS_URL]
+▶ Premium Support: [YOUR_SUPPORT_URL]
+▶ Feature Roadmap: [YOUR_ROADMAP_URL]
 
-🎁 USE CODE 'YOUTUBE10' FOR AN EXTRA 10% DISCOUNT
+🎁 USE CODE '[YOUR_DISCOUNT_CODE]' FOR AN EXTRA 10% DISCOUNT
 
 📌 SUBSCRIBE FOR MORE TUTORIALS
-👉 https://www.youtube.com/c/POSIMYTHInnovations/?sub_confirmation=1
+👉 [YOUR_CHANNEL_SUBSCRIBE_URL]
 
 #[10 hashtags]
 ```
@@ -108,11 +108,11 @@ Get Pro: https://theplusaddons.com/pricing/
 Priority order:
 1. Exact primary keyword (e.g., "horizontal scroll elementor")
 2. Exact secondary keyword variant
-3. Product brand + feature (e.g., "the plus addons elementor")
+3. Product brand + feature (e.g., "[your product brand] elementor")
 4. Broader category keyword
 5. Use-case tags (portfolio, agency, SaaS)
 6. Competitor method tags (e.g., "no code", "without elementor pro")
-7. Product brand alone ("the plus addons", "wdesignkit")
+7. Product brand alone ("[your-product]", "[your-other-product]")
 8. "elementor tutorial 2026"
 9. "wordpress tutorial"
 10. "elementor"

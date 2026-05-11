@@ -33,7 +33,7 @@ youtube-marketing-skills/
 │       │   ├── repurposing-guide.md
 │       │   └── dataforseo-integration.md
 │       ├── templates/                # Channel type configurations
-│       │   ├── product-company.md   # Plugin/SaaS companies (POSIMYTH default)
+│       │   ├── product-company.md   # Plugin/SaaS companies template
 │       │   ├── tutorial-channel.md
 │       │   ├── personal-brand.md
 │       │   ├── agency-channel.md

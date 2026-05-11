@@ -24,7 +24,7 @@ description: >
 | Product conflict | Zero | Can't promote competing plugin |
 | Upload frequency | 2+/month | Active channel = engaged audience |
 | Engagement rate | >1% (likes+comments/views) | Real audience, not bot-inflated |
-| Language | English | POSIMYTH's primary audience |
+| Language | English | Your primary audience |
 
 ### High-Value Partner Categories
 
@@ -69,12 +69,12 @@ description: >
 
 ### Format 1 — Guest Appearance (simplest)
 One creator appears in the other's video as a subject matter expert.
-- POSIMYTH angle: "How our widget solves X" in a theme reviewer's video
+- Your angle: "How our widget solves X" in a theme reviewer's video
 - Works when: partner channel is evaluating tools their audience should know
 
 ### Format 2 — Cross-Tutorial Pack
 Both channels release companion videos on the same day.
-- Example: Partner covers "How to choose an Elementor theme" → POSIMYTH covers "Best widgets to add to any Elementor theme"
+- Example: Partner covers "How to choose an Elementor theme" → Your channel covers "Best widgets to add to any Elementor theme"
 - Cross-link in both descriptions
 - Each promotes the other in end screen
 
@@ -84,7 +84,7 @@ Both channels release companion videos on the same day.
 - Works best when channels are close in size
 
 ### Format 4 — Product Bundle Mention
-Partner mentions POSIMYTH product as their recommended tool in a relevant video.
+Partner mentions your product as their recommended tool in a relevant video.
 - Can be organic (gift license → honest mention) or paid partnership
 - Must be disclosed per FTC rules
 
@@ -92,12 +92,12 @@ Partner mentions POSIMYTH product as their recommended tool in a relevant video.
 
 ### Template 1 — Peer Outreach (similar-sized channel)
 ```
-Subject: [Channel name] × POSIMYTH collab idea
+Subject: [Channel name] × [YOUR_COMPANY] collab idea
 
 Hi [Name],
 
 Big fan of your [specific video title] — especially [specific thing]. 
-I run the POSIMYTH YouTube channel (@posimyth) — we do no-code Elementor 
+I run a YouTube channel ([@your-channel]) — we do no-code Elementor 
 tutorials for the same WordPress audience.
 
 I had an idea: your [their specialty] + our [our widget/tool] is something 
@@ -108,8 +108,8 @@ No products selling to each other's audience, just pure value for both.
 
 Would you be open to a quick 20-min call to explore?
 
-[Aditya / POSIMYTH Team]
-posimyth.com
+[Your Name / Team]
+[your-company-url]
 ```
 
 ### Template 2 — Gifted License + Honest Review
@@ -118,7 +118,7 @@ Subject: Free [Product] license for [channel name]
 
 Hi [Name],
 
-I love what you do on [channel name]. I'm Aditya from POSIMYTH — 
+I love what you do on [channel name]. I'm [Your Name] from [Your Company] — 
 we make [product] for Elementor.
 
 I'd love to gift you a lifetime Pro license, no strings attached.
@@ -129,8 +129,8 @@ No scripted reviews.
 
 Let me know and I'll send the license over.
 
-[Aditya]
-posimyth.com
+[Your Name]
+[your-company-url]
 ```
 
 ### Template 3 — Comment-to-DM (warm outreach)

@@ -11,7 +11,7 @@ description: >
 - **Focus Digital, Dec 2025**: Tutorial channel avg CTR 4–8%. Dark backgrounds convert higher
 - **vidIQ**: Face in thumbnail → +38% CTR avg. Emotion > face alone
 - **AmpiFire**: Custom thumbnails vs auto-generated → +45% view lift
-- **Channel pattern**: POSIMYTH top video uses dark bg + result showcase + minimal text
+- **Channel pattern**: [YOUR_COMPANY] top video uses dark bg + result showcase + minimal text
 
 ## Winning Formula for Tutorial/WordPress Niche
 

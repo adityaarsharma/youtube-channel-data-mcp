@@ -3,7 +3,7 @@ template: product-company
 description: >
   For WordPress plugin companies, SaaS tools, and software products using YouTube
   as a sales channel. Revenue model is plugin/product sales, not ad revenue.
-  Primary example: POSIMYTH (@posimyth).
+  Configure your brand details in SKILL.md or templates/brands/ (gitignored).
 ---
 
 # Channel Template — Product Company

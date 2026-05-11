@@ -15,8 +15,8 @@ description: >
 
 ## Input Needed
 - Video URL or ID
-- Product featured (The Plus Addons / NexterWP / WDesignKit / UiChemy)
-- Target WordPress site (theplusaddons.com / nexterwp.com / etc.)
+- Product featured ([Your Product 1 / Product 2 / etc.])
+- Target WordPress site (your-site.com / etc.)
 
 ## Workflow
 
@@ -114,7 +114,7 @@ Deliver the complete post content ready to paste or publish:
 
 ```
 ## POST METADATA
-Site: [theplusaddons.com / etc.]
+Site: [your-wordpress-site.com]
 Title: [SEO title]
 Slug: [url-slug]
 Focus keyword: [keyword]

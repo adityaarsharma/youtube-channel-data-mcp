@@ -38,11 +38,11 @@
 
 1. Exact primary keyword
 2. Exact secondary keyword
-3. Product + feature (e.g., "wdesignkit hover menu")
+3. Product + feature (e.g., "your-product hover menu")
 4. Broader category (e.g., "elementor navigation tutorial")
 5. Use case (e.g., "portfolio navigation wordpress")
 6. Competitor method (e.g., "off canvas menu elementor") — captures comparison searches
-7. Product brand (e.g., "wdesignkit", "the plus addons")
+7. Product brand (e.g., "[your-product]", "[your product brand]")
 8. Year variant
 9. Platform broad (e.g., "elementor", "elementor pro")
 10. WordPress general

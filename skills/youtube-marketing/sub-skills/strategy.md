@@ -1,7 +1,7 @@
 ---
 name: youtube-strategy
 description: >
-  Full channel positioning strategy for POSIMYTH. Defines content pillars,
+  Full channel positioning strategy for [YOUR_COMPANY]. Defines content pillars,
   target audience segments, upload cadence, 30/60/90-day milestones, and
   the product-company YouTube framework. Not ad-revenue focused — built for
   plugin sales conversion.
@@ -17,15 +17,15 @@ description: >
 - **YouTube Internal, 2024**: "Expert" channels (consistent niche, consistent format) get 30% more Suggested placements
 - **Backlinko 2024**: Channels posting >52 videos/year rank in YouTube search 2.3x more often
 
-## POSIMYTH Channel Framework
+## [YOUR_COMPANY] Channel Framework
 
 ### The Product-Company YouTube Model (Different From Ad-Revenue)
 
-Most YouTube strategy is built for ad revenue. POSIMYTH's model is different:
+Most YouTube strategy is built for ad revenue. [YOUR_COMPANY]'s model is different:
 
 ```
 Standard creator:  Views → Impressions → Ad Revenue
-POSIMYTH model:    Views → Landing Page → Free Download → Pro Upgrade
+[YOUR_COMPANY] model:    Views → Landing Page → Free Download → Pro Upgrade
 ```
 
 **This means:**
@@ -37,23 +37,23 @@ POSIMYTH model:    Views → Landing Page → Free Download → Pro Upgrade
 ### Channel Positioning Statement
 
 ```
-POSIMYTH is the #1 source for no-code, no-CSS Elementor tutorials using 
-The Plus Addons, WDesignKit, and NexterWP — for web designers, agencies, 
+[YOUR_COMPANY] is the #1 source for no-code, no-CSS Elementor tutorials using 
+[Your Product], [Your Product 3], and [Your Product 2] — for web designers, agencies, 
 and developers who want premium results without premium complexity.
 ```
 
 **Owned angles** (no competitor covers these together):
 1. Widget-powered results with zero code
 2. Full agency/portfolio use cases (not just beginner demos)
-3. All POSIMYTH products cross-linked in every video (internal audience migration)
+3. All your products cross-linked in every video (internal audience migration)
 
 ## Content Pillars
 
 ### Pillar 1 — Broad Elementor Tutorials (40% of content)
-**Purpose**: Discoverability. Capture search traffic from users who don't know POSIMYTH yet.
+**Purpose**: Discoverability. Capture search traffic from users who don't know [YOUR_COMPANY] yet.
 **Format**: 8–15 min full build tutorial
 **Keywords**: "elementor [feature]", "how to [build X] in wordpress"
-**CTA**: Mention POSIMYTH product as the tool used — not forced, just natural
+**CTA**: Mention your product as the tool used — not forced, just natural
 
 ### Pillar 2 — Widget/Feature Demos (35% of content)
 **Purpose**: Conversion. Viewers actively evaluating the plugin.
@@ -65,7 +65,7 @@ and developers who want premium results without premium complexity.
 **Purpose**: Win searches with "without X / no X" framing. Captures Pro users considering alternatives.
 **Format**: 5–10 min focused answer
 **Keywords**: "[feature] without elementor pro", "[thing] free wordpress"
-**CTA**: POSIMYTH product as the free/easier alternative
+**CTA**: your product as the free/easier alternative
 
 ### Pillar 4 — Shorts and Quick Tips (10% of content)
 **Purpose**: Shorts feed impressions → channel awareness → subscriber growth
@@ -132,7 +132,7 @@ and developers who want premium results without premium complexity.
 ## Output Format
 
 ```
-# CHANNEL STRATEGY — POSIMYTH @posimyth
+# CHANNEL STRATEGY — [YOUR_COMPANY] [@your-channel]
 Date: [today]
 Horizon: [30/60/90 days or full-year]
 

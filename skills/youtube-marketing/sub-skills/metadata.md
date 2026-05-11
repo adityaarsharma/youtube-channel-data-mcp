@@ -32,7 +32,7 @@ Use the template from `/youtube seo`. Verify:
 - [ ] "WHAT YOU'LL LEARN" section present (5–7 bullets)
 - [ ] Timestamps present and start at 0:00
 - [ ] IMPORTANT LINKS section is complete (all 7 product links)
-- [ ] YOUTUBE10 discount code included
+- [ ] [YOUR_DISCOUNT_CODE] discount code included
 - [ ] Subscribe link includes `?sub_confirmation=1`
 - [ ] 10 hashtags at bottom
 - [ ] Total length: 250+ words
@@ -70,23 +70,23 @@ Use brief from `/youtube thumbnail`. Quick check:
 - [ ] 2–3 words max on thumbnail text
 - [ ] High contrast between text and background
 
-## POSIMYTH Fixed Links (Always Include)
+## Your Fixed Links (Always Include)
 
 ```
-▶ Get 120+ Powerful Elementor Widgets (The Plus Addons): https://theplusaddons.com/pricing/
-▶ Nexter Theme Builder: https://nexterwp.com/
-▶ WDesignKit Website: https://wdesignkit.com/
-▶ WDesignKit Docs & Help: https://learn.wdesignkit.com/
-▶ Facebook Community: https://www.facebook.com/groups/wdesignkit/
-▶ Feature Roadmap: https://roadmap.wdesignkit.com/roadmap
-▶ Premium Support: https://store.posimyth.com/helpdesk/
+▶ Get 120+ Powerful Elementor Widgets ([Your Product]): [YOUR_PRODUCT_URL]
+▶ [Your Product 2]: [YOUR_PRODUCT_2_URL]
+▶ [Your Product 3]: [YOUR_PRODUCT_3_URL]
+▶ [Your Product 3] Docs & Help: [YOUR_DOCS_URL]
+▶ Facebook Community: [YOUR_COMMUNITY_URL]
+▶ Feature Roadmap: [YOUR_ROADMAP_URL]
+▶ Premium Support: [YOUR_SUPPORT_URL]
 ```
 
-For The Plus Addons videos, swap WDesignKit community/docs for:
+For [Your Product] videos, swap [Your Product 3] community/docs for:
 ```
-▶ The Plus Addons Docs: https://theplusaddons.com/docs/
-▶ Facebook Community: https://www.facebook.com/groups/theplus4elementor/
-▶ Feature Roadmap: https://roadmap.theplusaddons.com/
+▶ [Your Product] Docs: [YOUR_DOCS_URL]
+▶ Facebook Community: [YOUR_COMMUNITY_URL]
+▶ Feature Roadmap: [YOUR_ROADMAP_URL]
 ```
 
 ## Output Format
@@ -94,7 +94,7 @@ For The Plus Addons videos, swap WDesignKit community/docs for:
 ```
 # UPLOAD PACKAGE — [Video Topic]
 Video ID: [if updating existing] or [NEW]
-Product: [WDesignKit / The Plus Addons / NexterWP / UiChemy]
+Product: [[Your Product 3] / [Your Product] / [Your Product 2] / [Your Product 4]]
 Prepared: [date]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -143,7 +143,7 @@ See `/youtube thumbnail` for full brief.
 - [ ] Title has primary keyword in first 40 chars
 - [ ] Description first 150 chars has primary keyword
 - [ ] All product links are present and correct
-- [ ] YOUTUBE10 discount code present
+- [ ] [YOUR_DISCOUNT_CODE] discount code present
 - [ ] Subscribe link has ?sub_confirmation=1
 - [ ] Chapters start at 0:00
 - [ ] Thumbnail uses dark background + result shown

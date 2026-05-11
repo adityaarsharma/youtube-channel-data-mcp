@@ -45,7 +45,7 @@ No other tool does this pipeline end-to-end.
 Imagine a world where you open Claude Code and type:
 
 ```
-/youtube ideate — what should we make this month for WDesignKit?
+/youtube ideate — what should we make this month for our product?
 ```
 
 Claude pulls live keyword data from DataForSEO, checks your channel's 90-day performance, maps gaps in the current SERP, and returns 10 ranked video ideas with volume, competitor data, and a production priority.

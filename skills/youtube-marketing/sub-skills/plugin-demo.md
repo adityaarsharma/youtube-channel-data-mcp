@@ -21,9 +21,9 @@ description: >
 ```
 
 **Examples:**
-- "Build Sticky Header in Elementor | Scroll Effects + Transparent | The Plus Addons 2026"
-- "Add Mega Menu in WordPress WITHOUT Elementor Pro | The Plus Addons 2026"
-- "Create Team Section in Elementor | Hover Animations + Profile Cards | WDesignKit 2026"
+- "Build Sticky Header in Elementor | Scroll Effects + Transparent | [Your Product] 2026"
+- "Add Mega Menu in WordPress WITHOUT Elementor Pro | [Your Product] 2026"
+- "Create Team Section in Elementor | Hover Animations + Profile Cards | [Your Product 3] 2026"
 
 **What makes plugin demo titles work:**
 - Lead with the OUTPUT (what the user gets), not the widget name

@@ -13,7 +13,7 @@ description: >
 - **Demand Curve, 2025**: Power law — plan 2 broad "breakout" attempts per month, rest can be widget-specific
 - **Semrush, 2025**: "How to [plugin feature]" queries spike Jan–Mar and Sep–Nov (avoid holidays)
 - **YouTube CPM seasonality**: Q4 (Oct–Dec) highest CPM (+40–60% vs Q1); Q1 lowest — plan affiliate/product CTAs for Q4
-- **POSIMYTH rule**: 2 broad Elementor tutorials : 1 widget-specific tutorial
+- **Product company rule**: 2 broad Elementor tutorials : 1 widget-specific tutorial
 
 ## Monthly Calendar Structure
 
@@ -21,11 +21,11 @@ description: >
 ```
 Week 1: Broad Elementor tutorial (high search volume keyword)
          + 1 Short (clip from previous video)
-Week 2: Widget demo video (The Plus Addons / WDesignKit / NexterWP)
+Week 2: Widget demo video ([Your Product] / [Your Product 3] / [Your Product 2])
          + 1 Short (result reveal from Week 1 video)
 Week 3: Broad Elementor tutorial (different topic/audience)
          + 1 Short
-Week 4: Widget demo OR WDesignKit/NexterWP feature
+Week 4: Widget demo OR [Your Products] feature
          + 1 Short
 ```
 
@@ -47,7 +47,7 @@ Week 4: Widget demo OR WDesignKit/NexterWP feature
 ```
 # CONTENT CALENDAR — [Month Year]
 Generated: [date]
-Channel: POSIMYTH (@posimyth)
+Channel: [YOUR_CHANNEL] ([@your-channel])
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## MONTHLY STRATEGY
