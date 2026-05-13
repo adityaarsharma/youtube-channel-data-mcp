@@ -47,6 +47,7 @@ function getNewToken(auth) {
       access_type: "offline",
       scope: [
         "https://www.googleapis.com/auth/youtube",
+        "https://www.googleapis.com/auth/youtube.force-ssl",
         "https://www.googleapis.com/auth/youtube.readonly",
         "https://www.googleapis.com/auth/yt-analytics.readonly",
         "https://www.googleapis.com/auth/youtubepartner-channel-audit",
@@ -185,6 +186,55 @@ async function searchMyVideos(auth, query, maxResults = 10) {
     viewCount: parseInt(v.statistics?.viewCount || 0),
     likeCount: parseInt(v.statistics?.likeCount || 0),
     thumbnail: v.snippet.thumbnails?.medium?.url,
+  }));
+}
+
+// Post a top-level comment on a video (for keyword-pinned SEO comments)
+async function postVideoComment(auth, videoId, commentText) {
+  const youtube = google.youtube({ version: "v3", auth });
+
+  const res = await youtube.commentThreads.insert({
+    part: ["snippet"],
+    requestBody: {
+      snippet: {
+        videoId: videoId,
+        topLevelComment: {
+          snippet: { textOriginal: commentText },
+        },
+      },
+    },
+  });
+
+  const commentId = res.data.id;
+  return {
+    success: true,
+    comment_id: commentId,
+    comment_url: `https://www.youtube.com/watch?v=${videoId}&lc=${commentId}`,
+    studio_pin_url: `https://studio.youtube.com/video/${videoId}/comments`,
+    pin_instruction: "Open studio_pin_url → find this comment → click ⋮ → Pin comment (10 seconds)",
+    text_posted: commentText,
+  };
+}
+
+// Get top-level comments on a video — pinned comments appear first (relevance order)
+async function getVideoComments(auth, videoId, maxResults = 20) {
+  const youtube = google.youtube({ version: "v3", auth });
+
+  const res = await youtube.commentThreads.list({
+    part: ["snippet"],
+    videoId: videoId,
+    maxResults: Math.min(maxResults, 100),
+    order: "relevance",
+  });
+
+  return (res.data.items || []).map((thread) => ({
+    id: thread.id,
+    text: thread.snippet.topLevelComment.snippet.textDisplay,
+    author: thread.snippet.topLevelComment.snippet.authorDisplayName,
+    author_channel_id: thread.snippet.topLevelComment.snippet.authorChannelId?.value,
+    like_count: thread.snippet.topLevelComment.snippet.likeCount,
+    published_at: thread.snippet.topLevelComment.snippet.publishedAt,
+    reply_count: thread.snippet.totalReplyCount,
   }));
 }
 
@@ -331,71 +381,28 @@ async function updateVideoSEO(auth, videoId, updates) {
   };
 }
 
-function isQuotaError(err) {
-  const code = err?.response?.data?.error?.code || err?.code;
-  const reason = err?.response?.data?.error?.errors?.[0]?.reason || "";
-  return code === 403 && (reason === "quotaExceeded" || reason === "dailyLimitExceeded");
-}
-
-async function getVideos(auth, maxResults = 0, order = "date") {
+async function getVideos(auth, maxResults = 50, order = "date") {
   const youtube = google.youtube({ version: "v3", auth });
   const chRes = await youtube.channels.list({ part: ["id"], mine: true });
   const channelId = chRes.data.items?.[0]?.id;
 
-  const fetchAll = maxResults === 0;
-  const allVideoIds = [];
-  let pageToken = undefined;
-  let quotaHit = false;
+  const res = await youtube.search.list({
+    part: ["id", "snippet"],
+    channelId,
+    maxResults,
+    order,
+    type: ["video"],
+  });
 
-  do {
-    const remaining = fetchAll ? 50 : Math.min(50, maxResults - allVideoIds.length);
-    try {
-      const res = await youtube.search.list({
-        part: ["id"],
-        channelId,
-        maxResults: remaining,
-        order,
-        type: ["video"],
-        pageToken,
-      });
-      const ids = (res.data.items || []).map((i) => i.id.videoId).filter(Boolean);
-      allVideoIds.push(...ids);
-      pageToken = res.data.nextPageToken;
-    } catch (err) {
-      if (isQuotaError(err)) {
-        quotaHit = true;
-        break;
-      }
-      throw err;
-    }
-  } while (pageToken && (fetchAll || allVideoIds.length < maxResults));
+  const videoIds = res.data.items.map((i) => i.id.videoId).filter(Boolean);
+  if (!videoIds.length) return [];
 
-  if (!allVideoIds.length) {
-    return quotaHit
-      ? { quota_exceeded: true, message: "YouTube API daily quota exceeded. Resets at midnight Pacific Time. No videos could be fetched.", videos: [] }
-      : [];
-  }
+  const statsRes = await youtube.videos.list({
+    part: ["snippet", "statistics", "contentDetails", "status"],
+    id: videoIds,
+  });
 
-  // Fetch stats in batches of 50 (videos.list limit)
-  const allVideos = [];
-  for (let i = 0; i < allVideoIds.length; i += 50) {
-    const batch = allVideoIds.slice(i, i + 50);
-    try {
-      const statsRes = await youtube.videos.list({
-        part: ["snippet", "statistics", "contentDetails", "status"],
-        id: batch,
-      });
-      allVideos.push(...(statsRes.data.items || []));
-    } catch (err) {
-      if (isQuotaError(err)) {
-        quotaHit = true;
-        break;
-      }
-      throw err;
-    }
-  }
-
-  const videos = allVideos.map((v) => ({
+  return statsRes.data.items.map((v) => ({
     id: v.id,
     url: `https://www.youtube.com/watch?v=${v.id}`,
     title: v.snippet.title,
@@ -409,16 +416,6 @@ async function getVideos(auth, maxResults = 0, order = "date") {
     commentCount: parseInt(v.statistics.commentCount || 0),
     thumbnail: v.snippet.thumbnails?.medium?.url,
   }));
-
-  if (quotaHit) {
-    return {
-      quota_exceeded: true,
-      message: `YouTube API daily quota exceeded mid-fetch. Returning ${videos.length} of ~${allVideoIds.length} videos collected before the limit was hit. Quota resets at midnight Pacific Time.`,
-      videos,
-    };
-  }
-
-  return videos;
 }
 
 async function getAnalytics(auth, startDate, endDate, metrics, dimensions) {
@@ -517,7 +514,7 @@ function getDateDaysAgo(days) {
 
 // ─── MCP Server ───────────────────────────────────────────────────────────────
 const server = new Server(
-  { name: "youtube-analytics", version: "2.1.0" },
+  { name: "youtube-analytics", version: "2.2.0" },
   { capabilities: { tools: {} } }
 );
 
@@ -573,11 +570,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     },
     {
       name: "get_all_videos",
-      description: "Get a list of your videos with their stats (views, likes, comments, tags, privacy status). Fetches ALL videos by default using pagination. Can be ordered by date or viewCount.",
+      description: "Get a list of your videos with their stats (views, likes, comments, tags, privacy status). Can be ordered by date or viewCount.",
       inputSchema: {
         type: "object",
         properties: {
-          maxResults: { type: "number", description: "Number of videos to fetch. Set to 0 or omit to fetch ALL videos (default). Use a specific number to limit results." },
+          maxResults: { type: "number", description: "Number of videos to fetch (default 50, max 50)" },
           order: { type: "string", enum: ["date", "viewCount", "rating"], description: "Sort order" },
         },
       },
@@ -623,6 +620,31 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
       description: "Analyze your channel data and get AI-powered video topic suggestions based on your best performing content.",
       inputSchema: { type: "object", properties: {} },
     },
+    // ── Comments ─────────────────────────────────────────────────────────────
+    {
+      name: "get_video_comments",
+      description: "Get top-level comments on a video, ordered by relevance (pinned comments appear first). Run this before post_video_comment to check if a keyword SEO comment already exists.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          video_id: { type: "string", description: "YouTube video ID" },
+          maxResults: { type: "number", description: "Number of comments to return (default 20, max 100)" },
+        },
+        required: ["video_id"],
+      },
+    },
+    {
+      name: "post_video_comment",
+      description: "Post a keyword-rich comment on your video for SEO — e.g. 'Jump to 4:44 to see how to convert HTML to a WordPress theme'. YouTube indexes pinned comments separately from the description, and they boost watch-time signals. After posting, pin it manually: open studio_pin_url → find comment → ⋮ → Pin comment (10 seconds). Always run get_video_comments first to check one doesn't already exist.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          video_id: { type: "string", description: "YouTube video ID" },
+          comment_text: { type: "string", description: "Comment text. Keep under 500 chars. Include a timestamp (e.g. '4:44') and target keyword naturally. No spam, no ALL CAPS, no fake urgency." },
+        },
+        required: ["video_id", "comment_text"],
+      },
+    },
   ],
 }));
 
@@ -652,7 +674,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         result = await getChannelStats(auth);
         break;
       case "get_all_videos":
-        result = await getVideos(auth, args?.maxResults ?? 0, args?.order || "date");
+        result = await getVideos(auth, args?.maxResults || 50, args?.order || "date");
         break;
       case "get_analytics_over_time":
         result = await getAnalytics(auth, args?.startDate, args?.endDate);
@@ -680,6 +702,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         };
         break;
       }
+      // ── Comments ─────────────────────────────────────────────────────────────
+      case "get_video_comments":
+        result = await getVideoComments(auth, args.video_id, args?.maxResults || 20);
+        break;
+      case "post_video_comment":
+        result = await postVideoComment(auth, args.video_id, args.comment_text);
+        break;
       default:
         throw new Error(`Unknown tool: ${name}`);
     }

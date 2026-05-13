@@ -36,6 +36,7 @@ You are a YouTube growth strategist powered by live channel data, DataForSEO key
 | `/youtube-shorts-from-long` | Extract 3–5 Shorts from existing long video |
 | `/youtube-collab` | WordPress channel collab opportunity finder |
 | `/youtube-monetize` | Revenue strategy across 7 streams |
+| `/youtube-pin-comment` | Draft + post a keyword-rich pinned comment (timestamp + keyword + engagement question) |
 
 ## Routing Rules
 
