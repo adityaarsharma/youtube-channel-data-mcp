@@ -331,46 +331,71 @@ async function updateVideoSEO(auth, videoId, updates) {
   };
 }
 
+function isQuotaError(err) {
+  const code = err?.response?.data?.error?.code || err?.code;
+  const reason = err?.response?.data?.error?.errors?.[0]?.reason || "";
+  return code === 403 && (reason === "quotaExceeded" || reason === "dailyLimitExceeded");
+}
+
 async function getVideos(auth, maxResults = 0, order = "date") {
   const youtube = google.youtube({ version: "v3", auth });
   const chRes = await youtube.channels.list({ part: ["id"], mine: true });
   const channelId = chRes.data.items?.[0]?.id;
 
-  // Fetch all video IDs via paginated search.list (50 per page max)
   const fetchAll = maxResults === 0;
   const allVideoIds = [];
   let pageToken = undefined;
+  let quotaHit = false;
 
   do {
     const remaining = fetchAll ? 50 : Math.min(50, maxResults - allVideoIds.length);
-    const res = await youtube.search.list({
-      part: ["id"],
-      channelId,
-      maxResults: remaining,
-      order,
-      type: ["video"],
-      pageToken,
-    });
-
-    const ids = (res.data.items || []).map((i) => i.id.videoId).filter(Boolean);
-    allVideoIds.push(...ids);
-    pageToken = res.data.nextPageToken;
+    try {
+      const res = await youtube.search.list({
+        part: ["id"],
+        channelId,
+        maxResults: remaining,
+        order,
+        type: ["video"],
+        pageToken,
+      });
+      const ids = (res.data.items || []).map((i) => i.id.videoId).filter(Boolean);
+      allVideoIds.push(...ids);
+      pageToken = res.data.nextPageToken;
+    } catch (err) {
+      if (isQuotaError(err)) {
+        quotaHit = true;
+        break;
+      }
+      throw err;
+    }
   } while (pageToken && (fetchAll || allVideoIds.length < maxResults));
 
-  if (!allVideoIds.length) return [];
+  if (!allVideoIds.length) {
+    return quotaHit
+      ? { quota_exceeded: true, message: "YouTube API daily quota exceeded. Resets at midnight Pacific Time. No videos could be fetched.", videos: [] }
+      : [];
+  }
 
   // Fetch stats in batches of 50 (videos.list limit)
   const allVideos = [];
   for (let i = 0; i < allVideoIds.length; i += 50) {
     const batch = allVideoIds.slice(i, i + 50);
-    const statsRes = await youtube.videos.list({
-      part: ["snippet", "statistics", "contentDetails", "status"],
-      id: batch,
-    });
-    allVideos.push(...(statsRes.data.items || []));
+    try {
+      const statsRes = await youtube.videos.list({
+        part: ["snippet", "statistics", "contentDetails", "status"],
+        id: batch,
+      });
+      allVideos.push(...(statsRes.data.items || []));
+    } catch (err) {
+      if (isQuotaError(err)) {
+        quotaHit = true;
+        break;
+      }
+      throw err;
+    }
   }
 
-  return allVideos.map((v) => ({
+  const videos = allVideos.map((v) => ({
     id: v.id,
     url: `https://www.youtube.com/watch?v=${v.id}`,
     title: v.snippet.title,
@@ -384,6 +409,16 @@ async function getVideos(auth, maxResults = 0, order = "date") {
     commentCount: parseInt(v.statistics.commentCount || 0),
     thumbnail: v.snippet.thumbnails?.medium?.url,
   }));
+
+  if (quotaHit) {
+    return {
+      quota_exceeded: true,
+      message: `YouTube API daily quota exceeded mid-fetch. Returning ${videos.length} of ~${allVideoIds.length} videos collected before the limit was hit. Quota resets at midnight Pacific Time.`,
+      videos,
+    };
+  }
+
+  return videos;
 }
 
 async function getAnalytics(auth, startDate, endDate, metrics, dimensions) {
