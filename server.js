@@ -331,28 +331,46 @@ async function updateVideoSEO(auth, videoId, updates) {
   };
 }
 
-async function getVideos(auth, maxResults = 50, order = "date") {
+async function getVideos(auth, maxResults = 0, order = "date") {
   const youtube = google.youtube({ version: "v3", auth });
   const chRes = await youtube.channels.list({ part: ["id"], mine: true });
   const channelId = chRes.data.items?.[0]?.id;
 
-  const res = await youtube.search.list({
-    part: ["id", "snippet"],
-    channelId,
-    maxResults,
-    order,
-    type: ["video"],
-  });
+  // Fetch all video IDs via paginated search.list (50 per page max)
+  const fetchAll = maxResults === 0;
+  const allVideoIds = [];
+  let pageToken = undefined;
 
-  const videoIds = res.data.items.map((i) => i.id.videoId).filter(Boolean);
-  if (!videoIds.length) return [];
+  do {
+    const remaining = fetchAll ? 50 : Math.min(50, maxResults - allVideoIds.length);
+    const res = await youtube.search.list({
+      part: ["id"],
+      channelId,
+      maxResults: remaining,
+      order,
+      type: ["video"],
+      pageToken,
+    });
 
-  const statsRes = await youtube.videos.list({
-    part: ["snippet", "statistics", "contentDetails", "status"],
-    id: videoIds,
-  });
+    const ids = (res.data.items || []).map((i) => i.id.videoId).filter(Boolean);
+    allVideoIds.push(...ids);
+    pageToken = res.data.nextPageToken;
+  } while (pageToken && (fetchAll || allVideoIds.length < maxResults));
 
-  return statsRes.data.items.map((v) => ({
+  if (!allVideoIds.length) return [];
+
+  // Fetch stats in batches of 50 (videos.list limit)
+  const allVideos = [];
+  for (let i = 0; i < allVideoIds.length; i += 50) {
+    const batch = allVideoIds.slice(i, i + 50);
+    const statsRes = await youtube.videos.list({
+      part: ["snippet", "statistics", "contentDetails", "status"],
+      id: batch,
+    });
+    allVideos.push(...(statsRes.data.items || []));
+  }
+
+  return allVideos.map((v) => ({
     id: v.id,
     url: `https://www.youtube.com/watch?v=${v.id}`,
     title: v.snippet.title,
@@ -520,11 +538,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     },
     {
       name: "get_all_videos",
-      description: "Get a list of your videos with their stats (views, likes, comments, tags, privacy status). Can be ordered by date or viewCount.",
+      description: "Get a list of your videos with their stats (views, likes, comments, tags, privacy status). Fetches ALL videos by default using pagination. Can be ordered by date or viewCount.",
       inputSchema: {
         type: "object",
         properties: {
-          maxResults: { type: "number", description: "Number of videos to fetch (default 50, max 50)" },
+          maxResults: { type: "number", description: "Number of videos to fetch. Set to 0 or omit to fetch ALL videos (default). Use a specific number to limit results." },
           order: { type: "string", enum: ["date", "viewCount", "rating"], description: "Sort order" },
         },
       },
@@ -599,7 +617,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         result = await getChannelStats(auth);
         break;
       case "get_all_videos":
-        result = await getVideos(auth, args?.maxResults || 50, args?.order || "date");
+        result = await getVideos(auth, args?.maxResults ?? 0, args?.order || "date");
         break;
       case "get_analytics_over_time":
         result = await getAnalytics(auth, args?.startDate, args?.endDate);
