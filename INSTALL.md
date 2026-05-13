@@ -1,8 +1,70 @@
 # Install Guide
 
-One setup. Local MCP + skills. ~10 minutes (Google Cloud project setup is the only slow part).
+Two things to install: the **MCP server** (reads/writes your YouTube channel) and the **skill files** (gives your agent the 21 commands). Optionally install the **agents** (email, video updater) for full automation.
 
-A no-install hosted version is coming soon. Until then, this is the path.
+---
+
+## Install Options
+
+| What | Time | Good for |
+|------|------|----------|
+| [MCP + Skills only](#mcp--skills-setup) | ~10 min | Using the 21 commands |
+| [Email Agent](#email-agent) | 2 min | Drafting FluentCRM emails |
+| [YouTube Updater Agent](#youtube-updater-agent) | 2 min | Bulk video description + title + pinned comment |
+| [All agents](#install-all-agents) | 2 min | Everything at once |
+
+---
+
+## Agents
+
+Agents are single `.md` files you drop into `.claude/agents/` (or your agent's equivalent). They give Claude standing instructions for a specific workflow — no code, no dependencies.
+
+### Install All Agents
+
+```bash
+# Clone repo
+git clone https://github.com/adityaarsharma/youtube-marketing-skills.git
+
+# Copy all agents
+cp youtube-marketing-skills/agents/*.md ~/.claude/agents/
+```
+
+### Email Agent
+
+Handles FluentCRM email campaigns — newsletters, onboarding sequences, release emails, win-backs. Enforces brand voice and quality rules on every draft.
+
+```bash
+curl -o ~/.claude/agents/email-agent.md \
+  https://raw.githubusercontent.com/adityaarsharma/youtube-marketing-skills/main/agents/email-agent.md
+```
+
+Or download directly: [agents/email-agent.md](agents/email-agent.md)
+
+**Requires:** FluentCRM MCP configured (see agent file for JSON config).
+
+### YouTube Updater Agent
+
+Bulk-optimises your product videos — fixes broken links, injects keywords, generates A/B title variants, improves timestamps via Gemini, posts a pinned keyword comment. Sends full diff report before any live write.
+
+```bash
+curl -o ~/.claude/agents/youtube-updater.md \
+  https://raw.githubusercontent.com/adityaarsharma/youtube-marketing-skills/main/agents/youtube-updater.md
+```
+
+Or download directly: [agents/youtube-updater.md](agents/youtube-updater.md)
+
+**Requires:** YouTube Analytics MCP + DataForSEO MCP + Gemini API key.
+
+**Run it:**
+```
+"Run youtube-updater on all my product videos"
+```
+
+---
+
+## MCP + Skills Setup
+
+~10 minutes (Google Cloud project setup is the only slow part).
 
 ---
 
