@@ -238,6 +238,110 @@ async function getVideoComments(auth, videoId, maxResults = 20) {
   }));
 }
 
+// ─── Write Operations: Thumbnail, Playlist, Upload ───────────────────────────
+
+// Upload a custom thumbnail (PNG/JPG) to a video. Image must be ≤2MB.
+async function setVideoThumbnail(auth, videoId, imagePath) {
+  if (!fs.existsSync(imagePath)) {
+    return { success: false, error: `Image not found: ${imagePath}` };
+  }
+  const stats = fs.statSync(imagePath);
+  if (stats.size > 2 * 1024 * 1024) {
+    return { success: false, error: `Image too large (${(stats.size / 1024 / 1024).toFixed(2)}MB). YouTube hard limit is 2MB.` };
+  }
+
+  const mimeType = imagePath.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
+  const youtube = google.youtube({ version: "v3", auth });
+
+  const res = await youtube.thumbnails.set({
+    videoId,
+    media: { mimeType, body: fs.createReadStream(imagePath) },
+  });
+
+  return {
+    success: true,
+    video_id: videoId,
+    thumbnails: res.data.items?.[0] || {},
+    quota_used: 50,
+  };
+}
+
+// Add a video to an existing playlist (position 0 = top)
+async function addVideoToPlaylist(auth, videoId, playlistId, position = 0) {
+  const youtube = google.youtube({ version: "v3", auth });
+
+  const res = await youtube.playlistItems.insert({
+    part: ["snippet"],
+    requestBody: {
+      snippet: {
+        playlistId,
+        position,
+        resourceId: { kind: "youtube#video", videoId },
+      },
+    },
+  });
+
+  return {
+    success: true,
+    playlist_item_id: res.data.id,
+    playlist_id: playlistId,
+    video_id: videoId,
+    position,
+    quota_used: 50,
+  };
+}
+
+// Upload a video file to YouTube. Local file path required.
+// metadata: { title, description, tags, categoryId, privacyStatus, publishAt }
+async function uploadVideo(auth, videoPath, metadata) {
+  if (!fs.existsSync(videoPath)) {
+    return { success: false, error: `Video file not found: ${videoPath}` };
+  }
+
+  const validation = validateYouTubeMetadata({
+    title: metadata.title,
+    description: metadata.description,
+    tags: metadata.tags,
+  });
+  if (!validation.valid) {
+    return {
+      success: false,
+      blocked: true,
+      reason: "YouTube policy guardrails prevented this upload.",
+      errors: validation.errors,
+    };
+  }
+
+  const youtube = google.youtube({ version: "v3", auth });
+  const res = await youtube.videos.insert({
+    part: ["snippet", "status"],
+    requestBody: {
+      snippet: {
+        title: metadata.title,
+        description: metadata.description || "",
+        tags: metadata.tags || [],
+        categoryId: metadata.categoryId || "28",
+        defaultLanguage: metadata.defaultLanguage || "en",
+      },
+      status: {
+        privacyStatus: metadata.privacyStatus || "private",
+        publishAt: metadata.publishAt || undefined,
+        selfDeclaredMadeForKids: false,
+      },
+    },
+    media: { body: fs.createReadStream(videoPath) },
+  });
+
+  return {
+    success: true,
+    video_id: res.data.id,
+    url: `https://www.youtube.com/watch?v=${res.data.id}`,
+    studio_url: `https://studio.youtube.com/video/${res.data.id}/edit`,
+    privacy_status: res.data.status?.privacyStatus,
+    quota_used: 1600,
+  };
+}
+
 // ─── YouTube Metadata Safety Guardrails ──────────────────────────────────────
 // HARD BLOCKS — enforced at the server level, cannot be bypassed by any caller.
 // Based on YouTube's official policies:
@@ -514,7 +618,7 @@ function getDateDaysAgo(days) {
 
 // ─── MCP Server ───────────────────────────────────────────────────────────────
 const server = new Server(
-  { name: "youtube-analytics", version: "2.2.0" },
+  { name: "youtube-analytics", version: "2.3.0" },
   { capabilities: { tools: {} } }
 );
 
@@ -645,6 +749,50 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         required: ["video_id", "comment_text"],
       },
     },
+    // ── Write: Thumbnail, Playlist, Upload ───────────────────────────────────
+    {
+      name: "set_video_thumbnail",
+      description: "Upload a custom thumbnail to a video. Image must be PNG or JPG, ≤2MB, recommended 1280x720. Uses thumbnails.set (50 quota units). Returns the uploaded thumbnail URLs at all resolutions.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          video_id: { type: "string", description: "YouTube video ID to apply the thumbnail to" },
+          image_path: { type: "string", description: "Absolute local file path to the thumbnail image (PNG/JPG, ≤2MB)" },
+        },
+        required: ["video_id", "image_path"],
+      },
+    },
+    {
+      name: "add_video_to_playlist",
+      description: "Add a video to one of your playlists. Default position 0 (top of playlist — most recent). Run before publishing so the video lands in the right product playlist immediately. Uses playlistItems.insert (50 quota units).",
+      inputSchema: {
+        type: "object",
+        properties: {
+          video_id: { type: "string", description: "YouTube video ID to add" },
+          playlist_id: { type: "string", description: "YouTube playlist ID (e.g. 'PLxxxxxxxxxxxxxxxxx'). Get from playlists.list or YouTube Studio URL." },
+          position: { type: "number", description: "Position in playlist — 0 = top (default), high number = end" },
+        },
+        required: ["video_id", "playlist_id"],
+      },
+    },
+    {
+      name: "upload_video",
+      description: "Upload a video file to YouTube. Same metadata guardrails as update_video_seo apply. Defaults to privacyStatus='private' for safety — set 'public' or use publishAt timestamp when ready to publish. Uses videos.insert (~1600 quota units — the most expensive call). Max video size 256GB. The video file must already be on local disk; if it's in Google Drive, download it first.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          video_path: { type: "string", description: "Absolute local file path to the .mp4 video" },
+          title: { type: "string", description: "Video title — same rules as update_video_seo (max 100 chars, no ALL CAPS, etc.)" },
+          description: { type: "string", description: "Video description with chapter timestamps. Max 5000 chars." },
+          tags: { type: "array", items: { type: "string" }, description: "Array of tags. Each ≤30 chars, total ≤500 chars, max 30 tags." },
+          categoryId: { type: "string", description: "YouTube category ID (default '28' = Science & Technology)" },
+          privacyStatus: { type: "string", enum: ["private", "unlisted", "public"], description: "Default 'private' for safety. Use publishAt to schedule." },
+          publishAt: { type: "string", description: "ISO 8601 timestamp for scheduled publish (e.g. '2026-05-20T15:30:00.000Z' for 9 PM IST). Only valid when privacyStatus='private'." },
+          defaultLanguage: { type: "string", description: "Default 'en'" },
+        },
+        required: ["video_path", "title"],
+      },
+    },
   ],
 }));
 
@@ -708,6 +856,24 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         break;
       case "post_video_comment":
         result = await postVideoComment(auth, args.video_id, args.comment_text);
+        break;
+      // ── Write: Thumbnail / Playlist / Upload ────────────────────────────────
+      case "set_video_thumbnail":
+        result = await setVideoThumbnail(auth, args.video_id, args.image_path);
+        break;
+      case "add_video_to_playlist":
+        result = await addVideoToPlaylist(auth, args.video_id, args.playlist_id, args?.position ?? 0);
+        break;
+      case "upload_video":
+        result = await uploadVideo(auth, args.video_path, {
+          title: args.title,
+          description: args?.description,
+          tags: args?.tags,
+          categoryId: args?.categoryId,
+          privacyStatus: args?.privacyStatus,
+          publishAt: args?.publishAt,
+          defaultLanguage: args?.defaultLanguage,
+        });
         break;
       default:
         throw new Error(`Unknown tool: ${name}`);
