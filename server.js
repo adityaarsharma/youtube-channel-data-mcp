@@ -35,7 +35,19 @@ function getOAuth2Client() {
 async function authorize() {
   const auth = getOAuth2Client();
   if (fs.existsSync(TOKEN_PATH)) {
-    auth.setCredentials(JSON.parse(fs.readFileSync(TOKEN_PATH)));
+    const tokens = JSON.parse(fs.readFileSync(TOKEN_PATH));
+    auth.setCredentials(tokens);
+    // Persist refreshed access tokens automatically so they survive restarts
+    auth.on("tokens", (newTokens) => {
+      try {
+        const existing = fs.existsSync(TOKEN_PATH)
+          ? JSON.parse(fs.readFileSync(TOKEN_PATH))
+          : {};
+        fs.writeFileSync(TOKEN_PATH, JSON.stringify({ ...existing, ...newTokens }));
+      } catch (e) {
+        console.error("Warning: could not persist refreshed token:", e.message);
+      }
+    });
     return auth;
   }
   return await getNewToken(auth);
@@ -797,10 +809,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 }));
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const auth = await authorize();
   const { name, arguments: args } = request.params;
 
   try {
+    const auth = await authorize();
     let result;
     switch (name) {
       // ── Video Metadata ──────────────────────────────────────────────────────
@@ -890,7 +902,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   }
 });
 
+// ─── Process-level crash guards ───────────────────────────────────────────────
+process.on("uncaughtException", (err) => {
+  console.error("[YouTube MCP] Uncaught exception (process kept alive):", err.message);
+});
+process.on("unhandledRejection", (reason) => {
+  console.error("[YouTube MCP] Unhandled rejection (process kept alive):", reason);
+});
+
 // ─── Start ────────────────────────────────────────────────────────────────────
 const transport = new StdioServerTransport();
 await server.connect(transport);
-console.error("YouTube MCP Server v2.0 running — analytics + video metadata ready...");
+console.error("YouTube MCP Server v2.3.0 running — analytics + video metadata ready...");
